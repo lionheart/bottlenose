@@ -62,3 +62,9 @@ that may be added in the future--the code is self-healing, it's amazing!)
 For more information about these calls, please consult the 
 [Product Advertising API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
 
+License
+-------
+
+Copyright &copy; 2010 Dan Loewenherz
+
+See LICENSE for details.
