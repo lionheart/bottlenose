@@ -4,24 +4,28 @@
   Copyright (c) 2006,2008 Doeke Zanstra
   All rights reserved.
 
-  Redistribution and use in source and binary forms, with or without modification, 
+  Redistribution and use in source and binary forms, with or without modification,
   are permitted provided that the following conditions are met:
 
-  Redistributions of source code must retain the above copyright notice, this 
-  list of conditions and the following disclaimer. Redistributions in binary 
-  form must reproduce the above copyright notice, this list of conditions and the 
-  following disclaimer in the documentation and/or other materials provided with 
+  Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer. Redistributions in binary
+  form must reproduce the above copyright notice, this list of conditions and the
+  following disclaimer in the documentation and/or other materials provided with
   the distribution.
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
-  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+  Neither the name of the dzLib nor the names of its contributors may be used to
+  endorse or promote products derived from this software without specific prior
+  written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
   THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
@@ -39,8 +43,8 @@
       <xsl:with-param name="s" select="."/>
     </xsl:call-template>
   </xsl:template>
-  
-  <!-- Main template for escaping strings; used by above template and for object-properties 
+
+  <!-- Main template for escaping strings; used by above template and for object-properties
        Responsibilities: placed quotes around string, and chain up to next filter, escape-bs-string -->
   <xsl:template name="escape-string">
     <xsl:param name="s"/>
@@ -50,7 +54,7 @@
     </xsl:call-template>
     <xsl:text>"</xsl:text>
   </xsl:template>
-  
+
   <!-- Escape the backslash (\) before everything else. -->
   <xsl:template name="escape-bs-string">
     <xsl:param name="s"/>
@@ -70,7 +74,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- Escape the double quote ("). -->
   <xsl:template name="escape-quot-string">
     <xsl:param name="s"/>
@@ -90,10 +94,10 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- Replace tab, line feed and/or carriage return by its matching escape code. Can't escape backslash
-       or double quote here, because they don't replace characters (&#x0; becomes \t), but they prefix 
-       characters (\ becomes \\). Besides, backslash should be seperate anyway, because it should be 
+       or double quote here, because they don't replace characters (&#x0; becomes \t), but they prefix
+       characters (\ becomes \\). Besides, backslash should be seperate anyway, because it should be
        processed first. This function can't do that. -->
   <xsl:template name="encode-string">
     <xsl:param name="s"/>
@@ -121,8 +125,7 @@
   </xsl:template>
 
   <!-- number (no support for javascript mantise) -->
-  <xsl:template match="text()[not(string(number())='NaN' or
-                       (starts-with(.,'0' ) and . != '0'))]">
+  <xsl:template match="text()[not(string(number())='NaN' or (starts-with(.,'0' ) and . != '0'))]">
     <xsl:value-of select="."/>
   </xsl:template>
 
@@ -130,45 +133,100 @@
   <xsl:template match="text()[translate(.,'TRUE','true')='true']">true</xsl:template>
   <xsl:template match="text()[translate(.,'FALSE','false')='false']">false</xsl:template>
 
-  <!-- object -->
+  <!-- objects and arrays -->
   <xsl:template match="*" name="base">
-    <xsl:if test="not(preceding-sibling::*)">{</xsl:if>
-    <xsl:call-template name="escape-string">
-      <xsl:with-param name="s" select="name()"/>
-    </xsl:call-template>
-    <xsl:text>:</xsl:text>
-    <!-- check type of node -->
     <xsl:choose>
-      <!-- null nodes -->
-      <xsl:when test="count(child::node())=0">null</xsl:when>
-      <!-- other nodes -->
+      <!-- manually specified array -->
+      <xsl:when test="(../@type = 'array')"> 
+        <xsl:variable name="el" select="name()"/>
+        <xsl:text>[</xsl:text>
+        <xsl:for-each select="../*[name()=$el]">
+          <xsl:if test="position()!=1">,</xsl:if>
+          <xsl:choose>
+            <xsl:when test="not(child::node())">
+              <xsl:text>null</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="child::node()"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
+        <xsl:text>]</xsl:text>
+        <xsl:if test="following-sibling::*">,</xsl:if>
+      </xsl:when>
+
+      <!-- complete array -->
+      <xsl:when test="(count(../*[name(current())=name()])=count(../*)) and count(../*[name(current())=name()])&gt;1">
+        <xsl:variable name="el" select="name()"/>
+        <xsl:if test="not(following-sibling::*[name()=$el])">
+          <xsl:text>[</xsl:text>
+          <xsl:for-each select="../*[name()=$el]">
+            <xsl:if test="position()!=1">,</xsl:if>
+            <xsl:choose>
+              <xsl:when test="not(child::node())">
+                <xsl:text>null</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates select="child::node()"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+          <xsl:text>]</xsl:text>
+        </xsl:if>
+      </xsl:when>
+
+      <!-- partial array -->
+      <xsl:when test="count(../*[name(current())=name()])&gt;1">
+	<xsl:if test="not(preceding-sibling::*)">{</xsl:if>
+        <xsl:variable name="el" select="name()"/>
+        <xsl:if test="not(following-sibling::*[name()=$el])">
+          <xsl:call-template name="escape-string">
+            <xsl:with-param name="s" select="$el"/>
+          </xsl:call-template>
+          <xsl:text>:[</xsl:text>
+          <xsl:for-each select="../*[name()=$el]">
+            <xsl:if test="position()!=1">,</xsl:if>
+            <xsl:choose>
+              <xsl:when test="not(child::node())">
+                <xsl:text>null</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates select="child::node()"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+          <xsl:text>]</xsl:text>
+          <xsl:if test="following-sibling::*">,</xsl:if>
+        </xsl:if>
+	<xsl:if test="not(following-sibling::*)">}</xsl:if>
+      </xsl:when>
+
+      <!-- object -->
       <xsl:otherwise>
-      	<xsl:apply-templates select="child::node()"/>
+	<xsl:if test="not(preceding-sibling::*)">{</xsl:if>
+        <xsl:call-template name="escape-string">
+          <xsl:with-param name="s" select="name()"/>
+        </xsl:call-template>
+        <xsl:text>:</xsl:text>
+        <!-- check type of node -->
+        <xsl:choose>
+    	    <!-- null nodes -->
+    	    <xsl:when test="count(child::node())=0">null</xsl:when>
+    	    <!-- other nodes -->
+    	    <xsl:otherwise>
+    	    	<xsl:apply-templates select="child::node()"/>
+    	    </xsl:otherwise>
+    	  </xsl:choose>
+    	  <!-- end of type check -->
+    	  <xsl:if test="following-sibling::*">,</xsl:if>
+	<xsl:if test="not(following-sibling::*)">}</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
-    <!-- end of type check -->
-    <xsl:if test="following-sibling::*">,</xsl:if>
-    <xsl:if test="not(following-sibling::*)">}</xsl:if>
   </xsl:template>
 
-  <!-- array -->
-  <xsl:template match="*[count(../*[name(../*)=name(.)])=count(../*) and count(../*)&gt;1]">
-    <xsl:if test="not(preceding-sibling::*)">[</xsl:if>
-    <xsl:choose>
-      <xsl:when test="not(child::node())">
-        <xsl:text>null</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="child::node()"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:if test="following-sibling::*">,</xsl:if>
-    <xsl:if test="not(following-sibling::*)">]</xsl:if>
-  </xsl:template>
-  
   <!-- convert root element to an anonymous container -->
   <xsl:template match="/">
     <xsl:apply-templates select="node()"/>
   </xsl:template>
-    
+
 </xsl:stylesheet>
