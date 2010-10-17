@@ -1,9 +1,11 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1'
+version = '0.1.1'
 
 install_requires = []
+
+CURRENT_FOLDER = os.path.dirname(__file__)
 
 def _py26OrGreater():
     return sys.hexversion > 0x20600f0
@@ -14,7 +16,6 @@ if not _py26OrGreater():
 setup(name='bottlenose',
       version=version,
       description="A Python hook into the Amazon.com Product Advertising API",
-      long_description=open("./README.md", "r").read(),
       # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
           "Development Status :: 4 - Beta",
