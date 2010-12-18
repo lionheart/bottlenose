@@ -1,6 +1,7 @@
 from base64 import b64encode
 from hashlib import sha256
 import urllib
+import urllib2
 import hmac
 import time
 
@@ -63,8 +64,11 @@ class AmazonCall(object):
         digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
         signature = urllib.quote(b64encode(digest))
 
-        response = urllib.urlopen("http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature)
-        return response.read()
+        api_string = "http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature
+        api_request = urllib2.Request(api_string)
+        response = urllib2.urlopen(api_request)
+        response_text = response.read()
+        return response_text
 
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId = None, AWSSecretAccessKey = None, \
