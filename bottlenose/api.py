@@ -1,9 +1,27 @@
 from base64 import b64encode
-from hashlib import sha256
+import sys
 import urllib
 import urllib2
 import hmac
 import time
+
+
+from hashlib import sha256
+
+# Python 2.4 compatibility
+# http://code.google.com/p/boto/source/detail?r=1011
+if sys.version[:3] == "2.4":
+    # we are using an hmac that expects a .new() method.
+    class Faker:
+        def __init__(self, which):
+            self.which = which
+            self.digest_size = self.which().digest_size
+
+        def new(self, *args, **kwargs):
+            return self.which(*args, **kwargs)
+	
+    sha256 = Faker(sha256)
+
 
 from exceptions import Exception
 
