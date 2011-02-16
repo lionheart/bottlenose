@@ -75,7 +75,7 @@ class AmazonCall(object):
         keys = kwargs.keys()
         keys.sort()
 
-        quoted_strings = "&".join("%s=%s" % (k, urllib.quote(str(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
+        quoted_strings = "&".join("%s=%s" % (k, urllib.quote(unicode(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
 
         data = "GET\n" + service_domain + "\n/onca/xml\n" + quoted_strings
 
