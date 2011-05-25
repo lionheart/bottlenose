@@ -66,6 +66,6 @@ API Developer Guide (http://docs.amazonwebservices.com/AWSECommerceService/lates
 License
 -------
 
-Copyright &copy; 2010 Dan Loewenherz
+Copyright &copy; 2011 Dan Loewenherz
 
 See LICENSE for details.
