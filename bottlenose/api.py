@@ -5,7 +5,6 @@ import urllib2
 import hmac
 import time
 
-
 from hashlib import sha256
 
 # Python 2.4 compatibility
@@ -19,9 +18,8 @@ if sys.version[:3] == "2.4":
 
         def new(self, *args, **kwargs):
             return self.which(*args, **kwargs)
-	
-    sha256 = Faker(sha256)
 
+    sha256 = Faker(sha256)
 
 from exceptions import Exception
 
@@ -38,8 +36,8 @@ class AmazonError(Exception):
     pass
 
 class AmazonCall(object):
-    def __init__(self, AWSAccessKeyId = None, AWSSecretAccessKey = None, \
-            AssociateTag = None, Operation = None, Version = "2009-10-01", Region = "US"):
+    def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
+            AssociateTag=None, Operation=None, Version="2010-11-01", Region="US"):
         self.AWSAccessKeyId = AWSAccessKeyId
         self.AWSSecretAccessKey = AWSSecretAccessKey
         self.Operation = Operation
@@ -55,7 +53,7 @@ class AmazonCall(object):
             return object.__getattr__(self, k)
         except:
             return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey, \
-                    self.AssociateTag, Operation = k, Version = self.Version, Region = self.Region)
+                    self.AssociateTag, Operation=k, Version=self.Version, Region=self.Region)
 
     def __call__(self, **kwargs):
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -89,10 +87,10 @@ class AmazonCall(object):
         return response_text
 
 class Amazon(AmazonCall):
-    def __init__(self, AWSAccessKeyId = None, AWSSecretAccessKey = None, \
-            AssociateTag = None, Operation = None, Version = "2009-10-01", Region = "US"):
+    def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
+            AssociateTag=None, Operation=None, Version="2010-11-01", Region="US"):
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey, \
-            AssociateTag, Operation, Version = Version, Region = Region)
+            AssociateTag, Operation, Version=Version, Region=Region)
 
 __all__ = ["Amazon", "AmazonError"]
 
