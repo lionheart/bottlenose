@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.2.1'
+version = '0.3.0'
 
 install_requires = []
 
@@ -16,9 +16,9 @@ if not _py26OrGreater():
 setup(name='bottlenose',
       version=version,
       description="A Python hook into the Amazon.com Product Advertising API",
-      # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+      # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
-          "Development Status :: 4 - Beta",
+          "Development Status :: 5 - Production/Stable",
           "Environment :: Console",
           "Intended Audience :: Developers",
           "Natural Language :: English",
@@ -31,7 +31,7 @@ setup(name='bottlenose',
           ],
       keywords='amazon, product advertising, api',
       author='Dan Loewenherz',
-      author_email='dloewenherz+bottlenose@gmail.com',
+      author_email='bottlenose@dlo.me',
       url='http://github.com/dlo/bottlenose',
       license='MIT License',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
