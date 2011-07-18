@@ -35,7 +35,7 @@ Want to grab some other data? No problem! Bottlenose to the rescue::
      <?xml version="1.0" encoding="UTF-8"?><HelpResponse xmlns="http://webserv...
 
 Any valid API call from the following is supported (in addition to any others
-that may be added in the future--the code is self-healing, it's amazing!)::
+that may be added in the future)::
 
      BrowseNodeLookup
      CartAdd
@@ -43,25 +43,15 @@ that may be added in the future--the code is self-healing, it's amazing!)::
      CartCreate
      CartGet
      CartModify
-     CustomerContentLookup
-     CustomerContentSearch
-     Help
      ItemLookup
      ItemSearch
-     ListLookup
-     ListSearch
      SellerListingLookup
      SellerListingSearch
      SellerLookup
      SimilarityLookup
-     TagLookup
-     TransactionLookup
-     VehiclePartLookup
-     VehiclePartSearch
-     VehicleSearch
 
-For more information about these calls, please consult the Product Advertising
-API Developer Guide (http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
+For more information about these calls, please consult the [Product Advertising
+API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
 
 License
 -------
