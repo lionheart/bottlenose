@@ -1,4 +1,5 @@
 from base64 import b64encode
+import gzip
 import sys
 import urllib
 import urllib2
@@ -6,6 +7,11 @@ import hmac
 import time
 
 from hashlib import sha256
+
+try:
+    import cStringIO as StringIO
+except ImportError:
+    import StringIO
 
 # Python 2.4 compatibility
 # http://code.google.com/p/boto/source/detail?r=1011
@@ -81,9 +87,14 @@ class AmazonCall(object):
         signature = urllib.quote(b64encode(digest))
 
         api_string = "http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature
-        api_request = urllib2.Request(api_string)
+        api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
         response = urllib2.urlopen(api_request)
-        response_text = response.read()
+        
+        if "gzip" in response.info().getheader("Content-Encoding"):
+            gzipped_file = gzip.GzipFile(fileobj=StringIO.StringIO(response.read()))
+            response_text = gzipped_file.read()
+        else:
+            response_text = response.read()
         return response_text
 
 class Amazon(AmazonCall):
