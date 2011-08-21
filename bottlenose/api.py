@@ -43,7 +43,7 @@ class AmazonError(Exception):
 
 class AmazonCall(object):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
-            AssociateTag=None, Operation=None, Version="2010-11-01", Region="US"):
+            AssociateTag=None, Operation=None, Version=None, Region=None):
         self.AWSAccessKeyId = AWSAccessKeyId
         self.AWSSecretAccessKey = AWSSecretAccessKey
         self.Operation = Operation
@@ -89,7 +89,7 @@ class AmazonCall(object):
         api_string = "http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature
         api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
         response = urllib2.urlopen(api_request)
-        
+
         if "gzip" in response.info().getheader("Content-Encoding"):
             gzipped_file = gzip.GzipFile(fileobj=StringIO.StringIO(response.read()))
             response_text = gzipped_file.read()
@@ -99,7 +99,7 @@ class AmazonCall(object):
 
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
-            AssociateTag=None, Operation=None, Version="2010-11-01", Region="US"):
+            AssociateTag=None, Operation=None, Version="2011-08-01", Region="US"):
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey, \
             AssociateTag, Operation, Version=Version, Region=Region)
 
