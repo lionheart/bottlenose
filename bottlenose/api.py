@@ -43,12 +43,14 @@ class AmazonError(Exception):
 
 class AmazonCall(object):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
-            AssociateTag=None, Operation=None, Version=None, Region=None):
+            AssociateTag=None, Operation=None, Style=None, Version=None, \
+            Region=None):
         self.AWSAccessKeyId = AWSAccessKeyId
         self.AWSSecretAccessKey = AWSSecretAccessKey
         self.Operation = Operation
         self.AssociateTag = AssociateTag
         self.Version = Version
+        self.Style = Style
         self.Region = Region
 
     def signed_request(self):
@@ -59,7 +61,8 @@ class AmazonCall(object):
             return object.__getattr__(self, k)
         except:
             return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey, \
-                    self.AssociateTag, Operation=k, Version=self.Version, Region=self.Region)
+                    self.AssociateTag, Operation=k, Version=self.Version,
+                    Style=self.Style, Region=self.Region)
 
     def __call__(self, **kwargs):
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -67,6 +70,9 @@ class AmazonCall(object):
         kwargs['Version'] = self.Version
         kwargs['AWSAccessKeyId'] = self.AWSAccessKeyId
         kwargs['Service'] = "AWSECommerceService"
+
+        if self.Style:
+            kwargs['Style'] = self.Style
 
         if self.AssociateTag:
             kwargs['AssociateTag'] = self.AssociateTag
@@ -99,9 +105,10 @@ class AmazonCall(object):
 
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
-            AssociateTag=None, Operation=None, Version="2011-08-01", Region="US"):
+            AssociateTag=None, Operation=None, Style=None, \
+            Version="2011-08-01", Region="US"):
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey, \
-            AssociateTag, Operation, Version=Version, Region=Region)
+            AssociateTag, Operation, Version=Version, Region=Region, Style=Style)
 
 __all__ = ["Amazon", "AmazonError"]
 
