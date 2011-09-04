@@ -31,11 +31,13 @@ from exceptions import Exception
 
 SERVICE_DOMAINS = {
     'CA': ('ecs.amazonaws.ca', 'xml-ca.amznxslt.com'),
+    'CN': ('ecs.amazonaws.cn', 'xml-cn.amznxslt.com'),
     'DE': ('ecs.amazonaws.de', 'xml-de.amznxslt.com'),
     'FR': ('ecs.amazonaws.fr', 'xml-fr.amznxslt.com'),
+    'IT': ('ecs.amazonaws.it', 'xml-it.amznxslt.com'),
     'JP': ('ecs.amazonaws.jp', 'xml-jp.amznxslt.com'),
-    'US': ('ecs.amazonaws.com', 'xml-us.amznxslt.com'),
     'UK': ('ecs.amazonaws.co.uk', 'xml-uk.amznxslt.com'),
+    'US': ('ecs.amazonaws.com', 'xml-us.amznxslt.com'),
 }
 
 class AmazonError(Exception):
