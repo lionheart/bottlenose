@@ -4,22 +4,18 @@ Bottlenose
 Description
 -----------
 
-Bottlenose takes care of everything you might want to do with the Amazon
-Product Advertising API.  Unlike other libraries, Bottlenose doesn't tell you
-what you can and can't do. For example: let's say Amazon adds a new possible
-value for their Operation parameter. No problem! Bottlenose lets you
-incorporate these changes into your code immediately, even without updating
-Bottlenose. How? Check it out below.
+Bottlenose is a direct Python mapping on top of the Amazon Product Advertising
+API.
 
 Usage
 -----
 
-Creation::
+Short Example::
 
      >>> import bottlenose
      >>> amazon = bottlenose.Amazon(access_key_id, secret_access_key, associate_tag)
-     >>> response = amazon.ItemLookup(ItemId = "0596520999", ResponseGroup =
-         "Images", SearchIndex = "Books", IdType = "ISBN",
+     >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup=
+         "Images", SearchIndex="Books", IdType="ISBN",
          Style="http://xml2json-xslt.googlecode.com/svn/trunk/xml2json.xslt")
      {"ItemLookupResponse":{"OperationRequest":{"HTTPHeaders":{"Header":null},"Re...
 
@@ -31,7 +27,7 @@ I've included the stylesheet in this project if you'd like to host it yourself.
 
 Want to grab some other data? No problem! Bottlenose to the rescue::
 
-     >>> response = amazon.Help(About = "ListSearch", HelpType = "Operation")
+     >>> response = amazon.Help(About="ListSearch", HelpType="Operation")
      <?xml version="1.0" encoding="UTF-8"?><HelpResponse xmlns="http://webserv...
 
 Any valid API call from the following is supported (in addition to any others
@@ -45,9 +41,6 @@ that may be added in the future)::
      CartModify
      ItemLookup
      ItemSearch
-     SellerListingLookup
-     SellerListingSearch
-     SellerLookup
      SimilarityLookup
 
 For more information about these calls, please consult the [Product Advertising
