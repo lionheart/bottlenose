@@ -2,16 +2,22 @@ from base64 import b64encode
 import gzip
 import sys
 import urllib
-import urllib2
+try:
+    import urllib2
+except ImportError:
+    import urllib.request as urllib2
 import hmac
 import time
 
 from hashlib import sha256
 
 try:
-    import cStringIO as StringIO
+    from cStringIO import StringIO
 except ImportError:
-    import StringIO
+    try:
+        from StringIO import StringIO
+    except ImportError:
+        from io import StringIO
 
 # Python 2.4 compatibility
 # http://code.google.com/p/boto/source/detail?r=1011
@@ -27,7 +33,10 @@ if sys.version[:3] == "2.4":
 
     sha256 = Faker(sha256)
 
-from exceptions import Exception
+try:
+    from exceptions import Exception
+except ImportError:
+    pass
 
 SERVICE_DOMAINS = {
     'CA': ('ecs.amazonaws.ca', 'xml-ca.amznxslt.com'),
@@ -99,7 +108,7 @@ class AmazonCall(object):
         response = urllib2.urlopen(api_request)
 
         if "gzip" in response.info().getheader("Content-Encoding"):
-            gzipped_file = gzip.GzipFile(fileobj=StringIO.StringIO(response.read()))
+            gzipped_file = gzip.GzipFile(fileobj=StringIO(response.read()))
             response_text = gzipped_file.read()
         else:
             response_text = response.read()
