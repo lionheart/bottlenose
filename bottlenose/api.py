@@ -66,7 +66,7 @@ class AmazonCall(object):
         except:
             return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey, \
                     self.AssociateTag, Operation=k, Version=self.Version,
-                    Style=self.Style, Region=self.Region)
+                    Style=self.Style, Region=self.Region, Timeout=self.Timeout)
 
     def __call__(self, **kwargs):
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -112,9 +112,9 @@ class AmazonCall(object):
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
             AssociateTag=None, Operation=None, Style=None, \
-            Version="2011-08-01", Region="US"):
+            Version="2011-08-01", Region="US", Timeout=None):
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey, \
-            AssociateTag, Operation, Version=Version, Region=Region, Style=Style)
+            AssociateTag, Operation, Version=Version, Region=Region, Style=Style, Timeout=Timeout)
 
 __all__ = ["Amazon", "AmazonError"]
 
