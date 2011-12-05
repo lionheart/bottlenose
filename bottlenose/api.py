@@ -5,6 +5,7 @@ import urllib
 import urllib2
 import hmac
 import time
+import socket
 
 from hashlib import sha256
 
@@ -46,7 +47,7 @@ class AmazonError(Exception):
 class AmazonCall(object):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
             AssociateTag=None, Operation=None, Style=None, Version=None, \
-            Region=None):
+            Region=None, Timeout=None):
         self.AWSAccessKeyId = AWSAccessKeyId
         self.AWSSecretAccessKey = AWSSecretAccessKey
         self.Operation = Operation
@@ -54,6 +55,7 @@ class AmazonCall(object):
         self.Version = Version
         self.Style = Style
         self.Region = Region
+        self.Timeout = Timeout
 
     def signed_request(self):
         pass
@@ -64,7 +66,7 @@ class AmazonCall(object):
         except:
             return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey, \
                     self.AssociateTag, Operation=k, Version=self.Version,
-                    Style=self.Style, Region=self.Region)
+                    Style=self.Style, Region=self.Region, Timeout=self.Timeout)
 
     def __call__(self, **kwargs):
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -96,6 +98,8 @@ class AmazonCall(object):
 
         api_string = "http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature
         api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
+        if self.Timeout:
+            socket.setdefaulttimeout(self.Timeout)
         response = urllib2.urlopen(api_request)
 
         if "gzip" in response.info().getheader("Content-Encoding"):
@@ -108,9 +112,9 @@ class AmazonCall(object):
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
             AssociateTag=None, Operation=None, Style=None, \
-            Version="2011-08-01", Region="US"):
+            Version="2011-08-01", Region="US", Timeout=None):
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey, \
-            AssociateTag, Operation, Version=Version, Region=Region, Style=Style)
+            AssociateTag, Operation, Version=Version, Region=Region, Style=Style, Timeout=Timeout)
 
 __all__ = ["Amazon", "AmazonError"]
 
