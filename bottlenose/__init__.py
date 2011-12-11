@@ -1,2 +1,2 @@
-from api import *
+from bottlenose.api import *
 
