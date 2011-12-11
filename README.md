@@ -4,18 +4,24 @@ Bottlenose
 Description
 -----------
 
-Bottlenose is a direct Python mapping on top of the Amazon Product Advertising
-API.
+Bottlenose is a thin Python wrapper over the Amazon Product Advertising API. There is practically no overhead to get started.
+
+Features
+--------
+
+* Compatible with Python versions 2.4 and up
+* Support for CA, CN, DE, ES, FR, IT, JP, UK, and US Amazon endpoints
+* No requirements, except simplejson for Python pre-2.6
 
 Usage
 -----
 
-Short Example::
+Creation::
 
      >>> import bottlenose
-     >>> amazon = bottlenose.Amazon(access_key_id, secret_access_key, associate_tag)
-     >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup=
-         "Images", SearchIndex="Books", IdType="ISBN",
+     >>> amazon = bottlenose.Amazon(AMAZON_ACCESS_KEY_ID, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
+     >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
+         SearchIndex="Books", IdType="ISBN",
          Style="http://xml2json-xslt.googlecode.com/svn/trunk/xml2json.xslt")
      {"ItemLookupResponse":{"OperationRequest":{"HTTPHeaders":{"Header":null},"Re...
 
@@ -27,7 +33,7 @@ I've included the stylesheet in this project if you'd like to host it yourself.
 
 Want to grab some other data? No problem! Bottlenose to the rescue::
 
-     >>> response = amazon.Help(About="ListSearch", HelpType="Operation")
+     >>> response = amazon.ItemSearch(Keywords="Kindle 3G")
      <?xml version="1.0" encoding="UTF-8"?><HelpResponse xmlns="http://webserv...
 
 Any valid API call from the following is supported (in addition to any others
@@ -41,6 +47,9 @@ that may be added in the future)::
      CartModify
      ItemLookup
      ItemSearch
+     SellerListingLookup
+     SellerListingSearch
+     SellerLookup
      SimilarityLookup
 
 For more information about these calls, please consult the [Product Advertising
@@ -52,3 +61,4 @@ License
 Copyright &copy; 2011 Dan Loewenherz
 
 See LICENSE for details.
+

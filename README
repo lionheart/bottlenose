@@ -4,12 +4,14 @@ Bottlenose
 Description
 -----------
 
-Bottlenose takes care of everything you might want to do with the Amazon
-Product Advertising API.  Unlike other libraries, Bottlenose doesn't tell you
-what you can and can't do. For example: let's say Amazon adds a new possible
-value for their Operation parameter. No problem! Bottlenose lets you
-incorporate these changes into your code immediately, even without updating
-Bottlenose. How? Check it out below.
+Bottlenose is a thin Python wrapper over the Amazon Product Advertising API. There is practically no overhead to get started.
+
+Features
+--------
+
+* Compatible with Python versions 2.4 and up
+* Support for CA, CN, DE, ES, FR, IT, JP, UK, and US Amazon endpoints
+* No requirements, except simplejson for Python pre-2.6
 
 Usage
 -----
@@ -17,9 +19,9 @@ Usage
 Creation::
 
      >>> import bottlenose
-     >>> amazon = bottlenose.Amazon(access_key_id, secret_access_key, associate_tag)
-     >>> response = amazon.ItemLookup(ItemId = "0596520999", ResponseGroup =
-         "Images", SearchIndex = "Books", IdType = "ISBN",
+     >>> amazon = bottlenose.Amazon(AMAZON_ACCESS_KEY_ID, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
+     >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
+         SearchIndex="Books", IdType="ISBN",
          Style="http://xml2json-xslt.googlecode.com/svn/trunk/xml2json.xslt")
      {"ItemLookupResponse":{"OperationRequest":{"HTTPHeaders":{"Header":null},"Re...
 
@@ -31,11 +33,11 @@ I've included the stylesheet in this project if you'd like to host it yourself.
 
 Want to grab some other data? No problem! Bottlenose to the rescue::
 
-     >>> response = amazon.Help(About = "ListSearch", HelpType = "Operation")
+     >>> response = amazon.ItemSearch(Keywords="Kindle 3G")
      <?xml version="1.0" encoding="UTF-8"?><HelpResponse xmlns="http://webserv...
 
 Any valid API call from the following is supported (in addition to any others
-that may be added in the future--the code is self-healing, it's amazing!)::
+that may be added in the future)::
 
      BrowseNodeLookup
      CartAdd
@@ -43,29 +45,21 @@ that may be added in the future--the code is self-healing, it's amazing!)::
      CartCreate
      CartGet
      CartModify
-     CustomerContentLookup
-     CustomerContentSearch
-     Help
      ItemLookup
      ItemSearch
-     ListLookup
-     ListSearch
      SellerListingLookup
      SellerListingSearch
      SellerLookup
      SimilarityLookup
-     TagLookup
-     TransactionLookup
-     VehiclePartLookup
-     VehiclePartSearch
-     VehicleSearch
 
-For more information about these calls, please consult the Product Advertising
-API Developer Guide (http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
+For more information about these calls, please consult the [Product Advertising
+API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
 
 License
 -------
 
-Copyright &copy; 2010 Dan Loewenherz
+Copyright &copy; 2011 Dan Loewenherz
 
 See LICENSE for details.
+
+
