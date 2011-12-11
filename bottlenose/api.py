@@ -34,6 +34,7 @@ SERVICE_DOMAINS = {
     'CA': ('ecs.amazonaws.ca', 'xml-ca.amznxslt.com'),
     'CN': ('webservices.amazon.cn', 'xml-cn.amznxslt.com'),
     'DE': ('ecs.amazonaws.de', 'xml-de.amznxslt.com'),
+    'ES': ('webservices.amazon.es', 'xml-es.amznxslt.com'),
     'FR': ('ecs.amazonaws.fr', 'xml-fr.amznxslt.com'),
     'IT': ('webservices.amazon.it', 'xml-it.amznxslt.com'),
     'JP': ('ecs.amazonaws.jp', 'xml-jp.amznxslt.com'),
@@ -101,6 +102,8 @@ class AmazonCall(object):
         if self.Timeout:
             socket.setdefaulttimeout(self.Timeout)
         response = urllib2.urlopen(api_request)
+        if self.Timeout:
+            socket.setdefaulttimeout(None)
 
         if "gzip" in response.info().getheader("Content-Encoding"):
             gzipped_file = gzip.GzipFile(fileobj=StringIO.StringIO(response.read()))
