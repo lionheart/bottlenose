@@ -4,7 +4,7 @@ Bottlenose
 Description
 -----------
 
-Bottlenose is a thin Python wrapper over the Amazon Product Advertising API. There is practically no overhead to get started. Before you get started, make sure you have both Amazon Product Advertising and AWS accounts (yes, they are separate--confusing, I know).
+Bottlenose is a thin Python wrapper over the Amazon Product Advertising API. There is practically no overhead. Before you get started, make sure you have both Amazon Product Advertising and AWS accounts (yes, they are separate--confusing, I know).
 
 Features
 --------
