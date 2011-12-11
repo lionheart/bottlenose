@@ -4,13 +4,7 @@ import sys, os
 version = '0.3.4'
 
 install_requires = []
-
-CURRENT_FOLDER = os.path.dirname(__file__)
-
-def _py26OrGreater():
-    return sys.hexversion > 0x20600f0
-
-if not _py26OrGreater():
+if sys.hexversion <= 0x20600f0: # Check for Python version bundled with json module
     install_requires.append("simplejson>=1.7.1")
 
 setup(name='bottlenose',
