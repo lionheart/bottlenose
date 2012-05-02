@@ -33,7 +33,7 @@ I've included the stylesheet in this project if you'd like to host it yourself.
 
 Want to grab some other data? No problem! Bottlenose to the rescue::
 
-     >>> response = amazon.ItemSearch(Keywords="Kindle 3G")
+     >>> response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
      <?xml version="1.0" encoding="UTF-8"?><HelpResponse xmlns="http://webserv...
 
 Any valid API call from the following is supported (in addition to any others
