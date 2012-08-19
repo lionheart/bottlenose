@@ -21,20 +21,13 @@ Creation::
      >>> import bottlenose
      >>> amazon = bottlenose.Amazon(AMAZON_ACCESS_KEY_ID, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
      >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
-         SearchIndex="Books", IdType="ISBN",
-         Style="http://xml2json-xslt.googlecode.com/svn/trunk/xml2json.xslt")
-     {"ItemLookupResponse":{"OperationRequest":{"HTTPHeaders":{"Header":null},"Re...
-
-Notice that I do not like XML. Despite this, you are free to omit the `Style`
-parameter when making your calls to Amazon. I like using an amazing XSLT
-stylesheet written by Doeke Zanstra that does its best to convert XML to JSON.
-As far as I can tell, it does a pretty amazing job with Amazon's responses.
-I've included the stylesheet in this project if you'd like to host it yourself.
+         SearchIndex="Books", IdType="ISBN")
+     <?xml version="1.0" ?><ItemLookupResponse xmlns="http://webservices.amazon...
 
 Want to grab some other data? No problem! Bottlenose to the rescue::
 
      >>> response = amazon.ItemSearch(Keywords="Kindle 3G")
-     <?xml version="1.0" encoding="UTF-8"?><HelpResponse xmlns="http://webserv...
+     <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
 
 Any valid API call from the following is supported (in addition to any others
 that may be added in the future). Just plug in appropriate request parameters
@@ -59,7 +52,7 @@ API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/lates
 License
 -------
 
-Copyright &copy; 2011 Dan Loewenherz
+Copyright &copy; 2011-2012 Dan Loewenherz
 
 See LICENSE for details.
 
