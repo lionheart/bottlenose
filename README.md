@@ -24,7 +24,7 @@ Usage
 
 Here's another example.
 
-     >>> response = amazon.ItemSearch(Keywords="Kindle 3G")
+     >>> response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
      <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
 
 Any valid API call from the following is supported (in addition to any others
