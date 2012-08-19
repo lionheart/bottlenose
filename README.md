@@ -16,22 +16,20 @@ Features
 Usage
 -----
 
-Creation::
-
      >>> import bottlenose
      >>> amazon = bottlenose.Amazon(AMAZON_ACCESS_KEY_ID, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
      >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
          SearchIndex="Books", IdType="ISBN")
      <?xml version="1.0" ?><ItemLookupResponse xmlns="http://webservices.amazon...
 
-Want to grab some other data? No problem! Bottlenose to the rescue::
+Here's another example.
 
      >>> response = amazon.ItemSearch(Keywords="Kindle 3G")
      <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
 
 Any valid API call from the following is supported (in addition to any others
 that may be added in the future). Just plug in appropriate request parameters
-for the operation you'd like to call, and you're good to go::
+for the operation you'd like to call, and you're good to go.
 
      BrowseNodeLookup
      CartAdd
