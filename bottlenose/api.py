@@ -9,6 +9,7 @@ except ImportError:
 import hmac
 import time
 import socket
+import logging
 
 from hashlib import sha256
 
@@ -79,6 +80,8 @@ class AmazonCall(object):
                     Style=self.Style, Region=self.Region, Timeout=self.Timeout)
 
     def __call__(self, **kwargs):
+        logger = logging.getLogger(__name__)
+
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         kwargs['Operation'] = self.Operation
         kwargs['Version'] = self.Version
@@ -110,6 +113,7 @@ class AmazonCall(object):
         api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
         if self.Timeout:
             socket.setdefaulttimeout(self.Timeout)
+        logger.debug("Amazon URL: %s" % api_string)
         response = urllib2.urlopen(api_request)
         if self.Timeout:
             socket.setdefaulttimeout(None)
