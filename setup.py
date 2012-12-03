@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.4.1'
+version = '0.4.2'
 
 install_requires = []
 if sys.hexversion <= 0x20600f0: # Check for Python version bundled with json module
