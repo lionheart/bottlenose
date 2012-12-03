@@ -82,7 +82,7 @@ class AmazonCall(object):
     def __call__(self, **kwargs):
         logger = logging.getLogger(__name__)
 
-        if kwargs['Style'] != None:
+        if 'Style' in kwargs:
             raise AmazonError("The `Style` parameter has been discontinued by AWS. Please remove all references to it and reattempt your request.")
 
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
