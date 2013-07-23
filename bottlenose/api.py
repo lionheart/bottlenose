@@ -96,15 +96,21 @@ class AmazonCall(object):
 
         service_domain = SERVICE_DOMAINS[self.Region][0]
 
-        keys = kwargs.keys()
-        keys.sort()
+        keys = sorted(kwargs.keys())
 
-        quoted_strings = "&".join("%s=%s" % (k, urllib.quote(unicode(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
+        if sys.version_info[0] == 3:
+            quoted_strings = "&".join("%s=%s" % (k, urllib.parse.quote(str(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
+        else:
+            quoted_strings = "&".join("%s=%s" % (k, urllib.quote(unicode(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
 
         data = "GET\n" + service_domain + "\n/onca/xml\n" + quoted_strings
 
-        digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
-        signature = urllib.quote(b64encode(digest))
+        if sys.version_info[0] == 3:
+            digest = hmac.new(bytes(self.AWSSecretAccessKey, encoding='utf-8'), bytes(data, encoding='utf-8'), sha256).digest()
+            signature = urllib.parse.quote(b64encode(digest))
+        else:
+            digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
+            signature = urllib.quote(b64encode(digest))
 
         api_string = "http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature
         api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
@@ -115,11 +121,17 @@ class AmazonCall(object):
         if self.Timeout:
             socket.setdefaulttimeout(None)
 
-        if "gzip" in response.info().getheader("Content-Encoding"):
-            gzipped_file = gzip.GzipFile(fileobj=StringIO(response.read()))
-            response_text = gzipped_file.read()
+        if sys.version_info[0] == 3:
+            if "gzip" in response.info().get("Content-Encoding"):
+                response_text = gzip.decompress(response.read())
+            else:
+                response_text = response.read()
         else:
-            response_text = response.read()
+            if "gzip" in response.info().getheader("Content-Encoding"):
+                gzipped_file = gzip.GzipFile(fileobj=StringIO(response.read()))
+                response_text = gzipped_file.read()
+            else:
+                response_text = response.read()
         return response_text
 
 class Amazon(AmazonCall):
@@ -131,4 +143,3 @@ class Amazon(AmazonCall):
             AssociateTag, Operation, Version=Version, Region=Region, Timeout=Timeout)
 
 __all__ = ["Amazon", "AmazonError"]
-
