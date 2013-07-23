@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.4.2'
+version = '0.5.0'
 
 install_requires = []
 if sys.hexversion <= 0x20600f0: # Check for Python version bundled with json module
@@ -25,8 +25,8 @@ setup(name='bottlenose',
           ],
       keywords='amazon, product advertising, api',
       author='Dan Loewenherz',
-      author_email='bottlenose@dlo.me',
-      url='http://github.com/dlo/bottlenose',
+      author_email='dan@dlo.me',
+      url='http://github.com/lionheart/bottlenose',
       license='MIT License',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
