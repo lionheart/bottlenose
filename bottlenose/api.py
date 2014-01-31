@@ -7,6 +7,7 @@ try:
 except ImportError:
     import urllib.request as urllib2
 import hmac
+import os
 import time
 import socket
 import logging
@@ -60,10 +61,13 @@ class AmazonCall(object):
             AssociateTag=None, Operation=None, Version=None, Region=None, \
             Timeout=None):
 
-        self.AWSAccessKeyId = AWSAccessKeyId
-        self.AWSSecretAccessKey = AWSSecretAccessKey
+        self.AWSAccessKeyId = (AWSAccessKeyId or
+                               os.environ.get('AWS_ACCESS_KEY_ID'))
+        self.AWSSecretAccessKey = (AWSSecretAccessKey or
+                                   os.environ.get('AWS_SECRET_ACCESS_KEY'))
+        self.AssociateTag = (AssociateTag or
+                             os.environ.get('AWS_ASSOCIATE_TAG'))
         self.Operation = Operation
-        self.AssociateTag = AssociateTag
         self.Version = Version
         self.Region = Region
         self.Timeout = Timeout
