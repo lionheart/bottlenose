@@ -59,16 +59,16 @@ response = amazon.CartClear(CartId, ...)
 
 #### 3. Sample Code
 
-     >>> import bottlenose
-     >>> amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
-     >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
-         SearchIndex="Books", IdType="ISBN")
-     <?xml version="1.0" ?><ItemLookupResponse xmlns="http://webservices.amazon...
+    >>> import bottlenose
+    >>> amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+    >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
+        SearchIndex="Books", IdType="ISBN")
+    <?xml version="1.0" ?><ItemLookupResponse xmlns="http://webservices.amazon...
 
 Here's another example.
 
-     >>> response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
-     <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
+    >>> response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
+    <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
 
 Bottlenose can also read your credentials from the environment automatically;
 just set `$AWS_ACCESS_KEY_ID`, `$AWS_SECRET_ACCESS_KEY` and
