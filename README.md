@@ -16,6 +16,24 @@ Features
 Usage
 -----
 
+#### 1. Available Search Methods:
+     
+```python
+     # Required
+     amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+
+     # Search for a Specific Item
+     response = amazon.ItemLookup(ItemId="B007OZNUCE")
+
+     # Search for Items by Keywords
+     response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
+
+     # Search for Images for an item
+     response = amazon.ItemLookup(ItemId="1449372422", ResponseGroup="Images")
+```
+
+#### 2. Sample Code
+
      >>> import bottlenose
      >>> amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
      >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
