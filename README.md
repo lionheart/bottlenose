@@ -92,7 +92,7 @@ for the operation you'd like to call, and you're good to go.
      SimilarityLookup
 
 You can refer here for a full listing of API calls to be made from Amazon.
-- > http://s3.amazonaws.com/awsdocs/Associates/2011-08-01/prod-adv-api-qrc-2011-08-01.pdf
+- > [Amazon API Quick Reference Card](http://s3.amazonaws.com/awsdocs/Associates/2011-08-01/prod-adv-api-qrc-2011-08-01.pdf)
 
 For more information about these calls, please consult the [Product Advertising
 API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
