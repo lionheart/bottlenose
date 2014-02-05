@@ -17,44 +17,44 @@ Usage
 -----
 
 #### 1. Available Search Methods:
-     
+
 ```python
-     # Required
-     amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+# Required
+amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
 
-     # Search for a Specific Item
-     response = amazon.ItemLookup(ItemId="B007OZNUCE")
+# Search for a Specific Item
+response = amazon.ItemLookup(ItemId="B007OZNUCE")
 
-     # Search for Items by Keywords
-     response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
+# Search for Items by Keywords
+response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
 
-     # Search for Images for an item
-     response = amazon.ItemLookup(ItemId="1449372422", ResponseGroup="Images")
+# Search for Images for an item
+response = amazon.ItemLookup(ItemId="1449372422", ResponseGroup="Images")
 
-     # Search for Similar Items
-     response = amazon.SimilarityLookup(ItemId="B007OZNUCE")
+# Search for Similar Items
+response = amazon.SimilarityLookup(ItemId="B007OZNUCE")
 ```
 
 #### 2. Available Shopping Related Methods:
 
 ```python
-     # Required
-     amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+# Required
+amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
 
-     # Create a cart
-     response = amazon.CartCreate(...)
+# Create a cart
+response = amazon.CartCreate(...)
 
-      # Adding to a cart
-      response = amazon.CartAdd(CartId, ...)
+# Adding to a cart
+response = amazon.CartAdd(CartId, ...)
 
-      # Get a cart by ID
-      response = amazon.CartGet(CartId, ...)
+# Get a cart by ID
+response = amazon.CartGet(CartId, ...)
 
-      # Modifying a cart
-      response = amazon.CartModify(ASIN,CartId,...)
+# Modifying a cart
+response = amazon.CartModify(ASIN,CartId,...)
 
-      # Clearing a cart
-      response = amazon.CartClear(CartId, ...)
+# Clearing a cart
+response = amazon.CartClear(CartId, ...)
 ```
 
 #### 3. Sample Code
@@ -78,18 +78,18 @@ Any valid API call from the following is supported (in addition to any others
 that may be added in the future). Just plug in appropriate request parameters
 for the operation you'd like to call, and you're good to go.
 
-     BrowseNodeLookup
-     CartAdd
-     CartClear
-     CartCreate
-     CartGet
-     CartModify
-     ItemLookup
-     ItemSearch
-     SellerListingLookup
-     SellerListingSearch
-     SellerLookup
-     SimilarityLookup
+    BrowseNodeLookup
+    CartAdd
+    CartClear
+    CartCreate
+    CartGet
+    CartModify
+    ItemLookup
+    ItemSearch
+    SellerListingLookup
+    SellerListingSearch
+    SellerLookup
+    SimilarityLookup
 
 You can refer here for a full listing of API calls to be made from Amazon.
 - [Amazon API Quick Reference Card](http://s3.amazonaws.com/awsdocs/Associates/2011-08-01/prod-adv-api-qrc-2011-08-01.pdf)
