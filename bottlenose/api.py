@@ -36,6 +36,7 @@ if sys.version[:3] == "2.4":
 
     sha256 = Faker(sha256)
 
+
 try:
     from exceptions import Exception
 except ImportError:
@@ -53,8 +54,10 @@ SERVICE_DOMAINS = {
     'US': ('ecs.amazonaws.com', 'xml-us.amznxslt.com'),
 }
 
+
 class AmazonError(Exception):
     pass
+
 
 class AmazonCall(object):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
@@ -100,15 +103,17 @@ class AmazonCall(object):
                               " AWS. Please remove all references to it and"
                               " reattempt your request.")
 
-        if self.MaxQPS:
-            last_query_time = self._last_query_time[0]
-            if last_query_time:
-                wait_time = 1 / self.MaxQPS - (time.time() - last_query_time)
-                if wait_time > 0:
-                    log.debug('Waiting %.3fs to call Amazon API' % wait_time)
-                    time.sleep(wait_time)
-
-            self._last_query_time[0] = time.time()
+        def quote_query(query):
+            if sys.version_info[0] == 3:
+                return "&".join("%s=%s" % (
+                    k, urllib.parse.quote(
+                        str(query[k]).encode('utf-8'), safe='~'))
+                        for k in sorted(query))
+            else:
+                return "&".join("%s=%s" % (
+                    k, urllib.quote(
+                        unicode(query[k]).encode('utf-8'), safe='~'))
+                        for k in sorted(query))
 
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ",
                                             time.gmtime())
@@ -122,17 +127,17 @@ class AmazonCall(object):
 
         service_domain = SERVICE_DOMAINS[self.Region][0]
 
-        keys = sorted(kwargs.keys())
+        if self.MaxQPS:
+            last_query_time = self._last_query_time[0]
+            if last_query_time:
+                wait_time = 1 / self.MaxQPS - (time.time() - last_query_time)
+                if wait_time > 0:
+                    log.debug('Waiting %.3fs to call Amazon API' % wait_time)
+                    time.sleep(wait_time)
 
-        if sys.version_info[0] == 3:
-            quoted_strings = "&".join("%s=%s" % (
-                k, urllib.parse.quote(
-                    str(kwargs[k]).encode('utf-8'), safe='~')) for k in keys)
-        else:
-            quoted_strings = "&".join("%s=%s" % (
-                k, urllib.quote(
-                    unicode(kwargs[k]).encode('utf-8'), safe='~'))
-                    for k in keys)
+            self._last_query_time[0] = time.time()
+
+        quoted_strings = quote_query(kwargs)
 
         data = "GET\n" + service_domain + "\n/onca/xml\n" + quoted_strings
 
@@ -145,13 +150,13 @@ class AmazonCall(object):
             digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
             signature = urllib.quote(b64encode(digest))
 
-        api_string = ("http://" + service_domain + "/onca/xml?" +
+        api_url = ("http://" + service_domain + "/onca/xml?" +
                       quoted_strings + "&Signature=%s" % signature)
         api_request = urllib2.Request(
-            api_string, headers={"Accept-Encoding": "gzip"})
+            api_url, headers={"Accept-Encoding": "gzip"})
         if self.Timeout:
             socket.setdefaulttimeout(self.Timeout)
-        log.debug("Amazon URL: %s" % api_string)
+        log.debug("Amazon URL: %s" % api_url)
         response = urllib2.urlopen(api_request)
         if self.Timeout:
             socket.setdefaulttimeout(None)
