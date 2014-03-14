@@ -85,7 +85,7 @@ class AmazonCall(object):
         try:
             return object.__getattr__(self, k)
         except:
-            return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey, \
+            return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey,
                               self.AssociateTag,
                               Operation=k, Version=self.Version,
                               Region=self.Region, Timeout=self.Timeout,
@@ -96,7 +96,9 @@ class AmazonCall(object):
         log = logging.getLogger(__name__)
 
         if 'Style' in kwargs:
-            raise AmazonError("The `Style` parameter has been discontinued by AWS. Please remove all references to it and reattempt your request.")
+            raise AmazonError("The `Style` parameter has been discontinued by"
+                              " AWS. Please remove all references to it and"
+                              " reattempt your request.")
 
         if self.MaxQPS:
             last_query_time = self._last_query_time[0]
@@ -108,7 +110,8 @@ class AmazonCall(object):
 
             self._last_query_time[0] = time.time()
 
-        kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                                            time.gmtime())
         kwargs['Operation'] = self.Operation
         kwargs['Version'] = self.Version
         kwargs['AWSAccessKeyId'] = self.AWSAccessKeyId
@@ -122,21 +125,30 @@ class AmazonCall(object):
         keys = sorted(kwargs.keys())
 
         if sys.version_info[0] == 3:
-            quoted_strings = "&".join("%s=%s" % (k, urllib.parse.quote(str(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
+            quoted_strings = "&".join("%s=%s" % (
+                k, urllib.parse.quote(
+                    str(kwargs[k]).encode('utf-8'), safe='~')) for k in keys)
         else:
-            quoted_strings = "&".join("%s=%s" % (k, urllib.quote(unicode(kwargs[k]).encode('utf-8'), safe = '~')) for k in keys)
+            quoted_strings = "&".join("%s=%s" % (
+                k, urllib.quote(
+                    unicode(kwargs[k]).encode('utf-8'), safe='~'))
+                    for k in keys)
 
         data = "GET\n" + service_domain + "\n/onca/xml\n" + quoted_strings
 
         if sys.version_info[0] == 3:
-            digest = hmac.new(bytes(self.AWSSecretAccessKey, encoding='utf-8'), bytes(data, encoding='utf-8'), sha256).digest()
+            digest = hmac.new(
+                bytes(self.AWSSecretAccessKey, encoding='utf-8'),
+                bytes(data, encoding='utf-8'), sha256).digest()
             signature = urllib.parse.quote(b64encode(digest))
         else:
             digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
             signature = urllib.quote(b64encode(digest))
 
-        api_string = "http://" + service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature
-        api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
+        api_string = ("http://" + service_domain + "/onca/xml?" +
+                      quoted_strings + "&Signature=%s" % signature)
+        api_request = urllib2.Request(
+            api_string, headers={"Accept-Encoding": "gzip"})
         if self.Timeout:
             socket.setdefaulttimeout(self.Timeout)
         log.debug("Amazon URL: %s" % api_string)
