@@ -57,9 +57,9 @@ class AmazonError(Exception):
     pass
 
 class AmazonCall(object):
-    def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
-            AssociateTag=None, Operation=None, Version=None, Region=None, \
-            Timeout=None):
+    def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
+            AssociateTag=None, Operation=None, Version=None, Region=None,
+            Timeout=None, MaxQPS=None, _last_query_time=None):
 
         self.AWSAccessKeyId = (AWSAccessKeyId or
                                os.environ.get('AWS_ACCESS_KEY_ID'))
@@ -67,10 +67,14 @@ class AmazonCall(object):
                                    os.environ.get('AWS_SECRET_ACCESS_KEY'))
         self.AssociateTag = (AssociateTag or
                              os.environ.get('AWS_ASSOCIATE_TAG'))
+        self.MaxQPS = MaxQPS
         self.Operation = Operation
         self.Version = Version
         self.Region = Region
         self.Timeout = Timeout
+
+        # put this in a list so it can be shared between instances
+        self._last_query_time = _last_query_time or [None]
 
     def signed_request(self):
         pass
@@ -80,14 +84,27 @@ class AmazonCall(object):
             return object.__getattr__(self, k)
         except:
             return AmazonCall(self.AWSAccessKeyId, self.AWSSecretAccessKey, \
-                    self.AssociateTag, Operation=k, Version=self.Version,
-                    Region=self.Region, Timeout=self.Timeout)
+                              self.AssociateTag,
+                              Operation=k, Version=self.Version,
+                              Region=self.Region, Timeout=self.Timeout,
+                              MaxQPS=self.MaxQPS,
+                              _last_query_time=self._last_query_time)
 
     def __call__(self, **kwargs):
-        logger = logging.getLogger(__name__)
+        log = logging.getLogger(__name__)
 
         if 'Style' in kwargs:
             raise AmazonError("The `Style` parameter has been discontinued by AWS. Please remove all references to it and reattempt your request.")
+
+        if self.MaxQPS:
+            last_query_time = self._last_query_time[0]
+            if last_query_time:
+                wait_time = 1 / self.MaxQPS - (time.time() - last_query_time)
+                if wait_time > 0:
+                    log.debug('Waiting %.3fs to call Amazon API' % wait_time)
+                    time.sleep(wait_time)
+
+            self._last_query_time[0] = time.time()
 
         kwargs['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         kwargs['Operation'] = self.Operation
@@ -120,7 +137,7 @@ class AmazonCall(object):
         api_request = urllib2.Request(api_string, headers={"Accept-Encoding": "gzip"})
         if self.Timeout:
             socket.setdefaulttimeout(self.Timeout)
-        logger.debug("Amazon URL: %s" % api_string)
+        log.debug("Amazon URL: %s" % api_string)
         response = urllib2.urlopen(api_request)
         if self.Timeout:
             socket.setdefaulttimeout(None)
@@ -139,11 +156,14 @@ class AmazonCall(object):
         return response_text
 
 class Amazon(AmazonCall):
-    def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None, \
-            AssociateTag=None, Operation=None, Version="2011-08-01", Region="US", \
-            Timeout=None):
+    def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
+            AssociateTag=None, Operation=None, Version="2011-08-01",
+            Region="US", Timeout=None, MaxQPS=None):
 
-        AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey, \
-            AssociateTag, Operation, Version=Version, Region=Region, Timeout=Timeout)
+        AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey,
+                            AssociateTag, Operation, Version=Version,
+                            Region=Region, Timeout=Timeout,
+                            MaxQPS=MaxQPS)
+
 
 __all__ = ["Amazon", "AmazonError"]
