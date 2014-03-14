@@ -59,7 +59,8 @@ class AmazonError(Exception):
 class AmazonCall(object):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
             AssociateTag=None, Operation=None, Version=None, Region=None,
-            Timeout=None, MaxQPS=None, _last_query_time=None):
+            Timeout=None, MaxQPS=None, Parser=None,
+            _last_query_time=None):
 
         self.AWSAccessKeyId = (AWSAccessKeyId or
                                os.environ.get('AWS_ACCESS_KEY_ID'))
@@ -69,6 +70,7 @@ class AmazonCall(object):
                              os.environ.get('AWS_ASSOCIATE_TAG'))
         self.MaxQPS = MaxQPS
         self.Operation = Operation
+        self.Parser = Parser
         self.Version = Version
         self.Region = Region
         self.Timeout = Timeout
@@ -87,7 +89,7 @@ class AmazonCall(object):
                               self.AssociateTag,
                               Operation=k, Version=self.Version,
                               Region=self.Region, Timeout=self.Timeout,
-                              MaxQPS=self.MaxQPS,
+                              MaxQPS=self.MaxQPS, Parser=self.Parser,
                               _last_query_time=self._last_query_time)
 
     def __call__(self, **kwargs):
@@ -153,17 +155,22 @@ class AmazonCall(object):
                 response_text = gzipped_file.read()
             else:
                 response_text = response.read()
-        return response_text
+
+        if self.Parser:
+            return self.Parser(response_text)
+        else:
+            return response_text
+
 
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
             AssociateTag=None, Operation=None, Version="2011-08-01",
-            Region="US", Timeout=None, MaxQPS=None):
+            Region="US", Timeout=None, MaxQPS=None, Parser=None):
 
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey,
                             AssociateTag, Operation, Version=Version,
                             Region=Region, Timeout=Timeout,
-                            MaxQPS=MaxQPS)
+                            MaxQPS=MaxQPS, Parser=Parser)
 
 
 __all__ = ["Amazon", "AmazonError"]
