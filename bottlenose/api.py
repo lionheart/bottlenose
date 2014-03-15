@@ -198,15 +198,23 @@ class AmazonCall(object):
 
             self._last_query_time[0] = time.time()
 
-        # make the actual call
+        # make the actual API call
         api_request = urllib2.Request(
             api_url, headers={"Accept-Encoding": "gzip"})
-        if self.Timeout:
-            socket.setdefaulttimeout(self.Timeout)
+
         log.debug("Amazon URL: %s" % api_url)
-        response = urllib2.urlopen(api_request)
-        if self.Timeout:
-            socket.setdefaulttimeout(None)
+
+        if self.Timeout and sys.version[:3] in ["2.4", "2.5"]:
+            # urllib2.urlopen() doesn't accept timeout until 2.6
+            old_timeout = socket.getdefaulttimeout()
+            try:
+                socket.setdefaulttimeout(self.Timeout)
+                response = urllib2.urlopen(api_request)
+            finally:
+                socket.setdefaulttimeout(old_timeout)
+        else:
+            # the simple way
+            response = urllib2.urlopen(api_request, timeout=self.Timeout)
 
         # decompress the response if need be
         if sys.version_info[0] == 3:
