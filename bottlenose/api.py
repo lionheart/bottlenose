@@ -264,6 +264,48 @@ class Amazon(AmazonCall):
             AssociateTag=None, Operation=None, Version="2011-08-01",
             Region="US", Timeout=None, MaxQPS=None, Parser=None,
             CacheReader=None, CacheWriter=None, ErrorHandler=None):
+        """Create an Amazon API object.
+
+        AWSAccessKeyId: Your AWS Access Key, sent with API queries. If not
+                        set, will be automatically read from the environment
+                        variable $AWS_ACCESS_KEY_ID
+        AWSSecretAccessKey: Your AWS Secret Key, used to sign API queries. If
+                            not set, will be automatically read from the
+                            environment variable $AWS_SECRET_ACCESS_KEY
+        AssociateTag: Your "username" for the Amazon Affiliate program,
+                      sent with API queries.
+        Version: API version. The default should work
+        Region: ccTLD you want to search for products on (e.g. 'UK'
+                for amazon.co.uk). Must be uppercase. Default is 'US'.
+        Timeout: optional timeout for queries
+        MaxQPS: optional maximum queries per second. If we've made an API call
+                on this object more recently that 1/MaxQPS, we'll wait
+                before making the call. Useful for making batches of queries.
+                You generally want to set this a little lower than the
+                max (so 0.9, not 1.0).
+        Parser: a function that takes the raw API response (XML in a
+                bytestring) and returns a more convenient object of
+                your choice; if set, API calls will pass the response through
+                this
+        CacheReader: Called before attempting to make an API call.
+                     A function that takes a single argument, the URL that
+                     would be passed to the API, minus auth information,
+                     and returns a cached version of the (unparsed) response,
+                    or None
+        CacheWriter: Called after a successful API call. A function that
+                     takes two arguments, the same URL passed to
+                     CacheReader, and the (unparsed) API response.
+        ErrorHandler: Called after an unsuccessful API call, with a
+                      dictionary containing these values:
+                          exception: the exception (an HTTPError or URLError)
+                          api_url: the url called
+                          cache_url: the url used for caching purposes
+                                     (see CacheReader above)
+                      If this returns true, the call will be retried
+                      (you generally want to wait some time before
+                      returning, in this case)
+        """
+        # Operation is for internal use by AmazonCall.__getattr__()
 
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey,
                             AssociateTag, Operation, Version=Version,
