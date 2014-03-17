@@ -231,12 +231,7 @@ class AmazonCall(object):
 
         # write it back to the cache
         if self.CacheWriter:
-            # put this in a dictionary so we can add fields as needed
-            response_info = {
-                'data': response_text,
-                'status_code': response.getcode(),
-            }
-            self.CacheWriter(cache_url, response_info)
+            self.CacheWriter(cache_url, response_text)
 
         # parse and return it
         return self._maybe_parse(response_text)
