@@ -79,6 +79,7 @@ class AmazonCall(object):
             AssociateTag=None, Operation=None, Version=None, Region=None,
             Timeout=None, MaxQPS=None, Parser=None,
             CacheReader=None, CacheWriter=None,
+            ErrorHandler=None,
             _last_query_time=None):
 
         self.AWSAccessKeyId = (AWSAccessKeyId or
@@ -89,6 +90,7 @@ class AmazonCall(object):
                              os.environ.get('AWS_ASSOCIATE_TAG'))
         self.CacheReader = CacheReader
         self.CacheWriter = CacheWriter
+        self.ErrorHandler = ErrorHandler
         self.MaxQPS = MaxQPS
         self.Operation = Operation
         self.Parser = Parser
@@ -113,6 +115,7 @@ class AmazonCall(object):
                               MaxQPS=self.MaxQPS, Parser=self.Parser,
                               CacheReader=self.CacheReader,
                               CacheWriter=self.CacheWriter,
+                              ErrorHandler=self.ErrorHandler,
                               _last_query_time=self._last_query_time)
 
     def _maybe_parse(self, response_text):
@@ -204,17 +207,32 @@ class AmazonCall(object):
 
         log.debug("Amazon URL: %s" % api_url)
 
-        if self.Timeout and sys.version[:3] in ["2.4", "2.5"]:
-            # urllib2.urlopen() doesn't accept timeout until 2.6
-            old_timeout = socket.getdefaulttimeout()
+        while True:  # may retry on error
             try:
-                socket.setdefaulttimeout(self.Timeout)
-                response = urllib2.urlopen(api_request)
-            finally:
-                socket.setdefaulttimeout(old_timeout)
-        else:
-            # the simple way
-            response = urllib2.urlopen(api_request, timeout=self.Timeout)
+                if self.Timeout and sys.version[:3] in ["2.4", "2.5"]:
+                    # urllib2.urlopen() doesn't accept timeout until 2.6
+                    old_timeout = socket.getdefaulttimeout()
+                    try:
+                        socket.setdefaulttimeout(self.Timeout)
+                        response = urllib2.urlopen(api_request)
+                    finally:
+                        socket.setdefaulttimeout(old_timeout)
+                else:
+                    # the simple way
+                    response = urllib2.urlopen(api_request,
+                                               timeout=self.Timeout)
+            except:
+                if not self.ErrorHandler:
+                    raise
+
+                exception = sys.exc_info()[1]  # works in Python 2 and 3
+                err = {
+                    'api_url': api_url,
+                    'cache_url': cache_url,
+                    'exception': exception,
+                }
+                if not self.ErrorHandler(err):
+                    raise
 
         # decompress the response if need be
         if sys.version_info[0] == 3:
@@ -241,14 +259,15 @@ class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
             AssociateTag=None, Operation=None, Version="2011-08-01",
             Region="US", Timeout=None, MaxQPS=None, Parser=None,
-            CacheReader=None, CacheWriter=None):
+            CacheReader=None, CacheWriter=None, ErrorHandler=None):
 
         AmazonCall.__init__(self, AWSAccessKeyId, AWSSecretAccessKey,
                             AssociateTag, Operation, Version=Version,
                             Region=Region, Timeout=Timeout,
                             MaxQPS=MaxQPS, Parser=Parser,
                             CacheReader=CacheReader,
-                            CacheWriter=CacheWriter)
+                            CacheWriter=CacheWriter,
+                            ErrorHandler=ErrorHandler)
 
 
 __all__ = ["Amazon", "AmazonError"]
