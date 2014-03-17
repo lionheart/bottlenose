@@ -202,12 +202,13 @@ class AmazonCall(object):
             self._last_query_time[0] = time.time()
 
         # make the actual API call
-        api_request = urllib2.Request(
-            api_url, headers={"Accept-Encoding": "gzip"})
-
-        log.debug("Amazon URL: %s" % api_url)
 
         while True:  # may retry on error
+            api_request = urllib2.Request(
+                api_url, headers={"Accept-Encoding": "gzip"})
+
+            log.debug("Amazon URL: %s" % api_url)
+
             try:
                 if self.Timeout and sys.version[:3] in ["2.4", "2.5"]:
                     # urllib2.urlopen() doesn't accept timeout until 2.6
