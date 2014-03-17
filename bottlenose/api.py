@@ -54,6 +54,8 @@ SERVICE_DOMAINS = {
     'US': ('ecs.amazonaws.com', 'xml-us.amznxslt.com'),
 }
 
+log = logging.getLogger(__name__)
+
 
 def _quote_query(query):
     """Turn a dictionary into a query string in a URL, with keys
@@ -173,9 +175,40 @@ class AmazonCall(object):
 
         return "http://" + service_domain + "/onca/xml?" + _quote_query(query)
 
-    def __call__(self, **kwargs):
-        log = logging.getLogger(__name__)
+    def _call_api(self, api_url, err_env):
+        """urlopen(), plus error handling and possible retries.
 
+        err_env is a dict of additional info passed to the error handler
+        """
+        while True:  # may retry on error
+            api_request = urllib2.Request(
+                api_url, headers={"Accept-Encoding": "gzip"})
+
+            log.debug("Amazon URL: %s" % api_url)
+
+            try:
+                if self.Timeout and sys.version[:3] in ["2.4", "2.5"]:
+                    # urllib2.urlopen() doesn't accept timeout until 2.6
+                    old_timeout = socket.getdefaulttimeout()
+                    try:
+                        socket.setdefaulttimeout(self.Timeout)
+                        return urllib2.urlopen(api_request)
+                    finally:
+                        socket.setdefaulttimeout(old_timeout)
+                else:
+                    # the simple way
+                    return urllib2.urlopen(api_request, timeout=self.Timeout)
+            except:
+                if not self.ErrorHandler:
+                    raise
+
+                exception = sys.exc_info()[1]  # works in Python 2 and 3
+                err = {'exception': exception}
+                err.update(err_env)
+                if not self.ErrorHandler(err):
+                    raise
+
+    def __call__(self, **kwargs):
         if 'Style' in kwargs:
             raise AmazonError("The `Style` parameter has been discontinued by"
                               " AWS. Please remove all references to it and"
@@ -202,38 +235,8 @@ class AmazonCall(object):
             self._last_query_time[0] = time.time()
 
         # make the actual API call
-
-        while True:  # may retry on error
-            api_request = urllib2.Request(
-                api_url, headers={"Accept-Encoding": "gzip"})
-
-            log.debug("Amazon URL: %s" % api_url)
-
-            try:
-                if self.Timeout and sys.version[:3] in ["2.4", "2.5"]:
-                    # urllib2.urlopen() doesn't accept timeout until 2.6
-                    old_timeout = socket.getdefaulttimeout()
-                    try:
-                        socket.setdefaulttimeout(self.Timeout)
-                        response = urllib2.urlopen(api_request)
-                    finally:
-                        socket.setdefaulttimeout(old_timeout)
-                else:
-                    # the simple way
-                    response = urllib2.urlopen(api_request,
-                                               timeout=self.Timeout)
-            except:
-                if not self.ErrorHandler:
-                    raise
-
-                exception = sys.exc_info()[1]  # works in Python 2 and 3
-                err = {
-                    'api_url': api_url,
-                    'cache_url': cache_url,
-                    'exception': exception,
-                }
-                if not self.ErrorHandler(err):
-                    raise
+        response = self._call_api(api_url,
+                                  {'api_url': api_url, 'cache_url': cache_url})
 
         # decompress the response if need be
         if sys.version_info[0] == 3:
