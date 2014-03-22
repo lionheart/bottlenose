@@ -22,6 +22,14 @@ except ImportError:
     except ImportError:
         from io import StringIO
 
+try:
+    from urllib import quote as urllib_quote
+except ImportError:
+    # Python 3
+    from urllib.parse import quote as urllib_quote
+    unicode = str
+
+
 # Python 2.4 compatibility
 # http://code.google.com/p/boto/source/detail?r=1011
 if sys.version[:3] == "2.4":
@@ -60,16 +68,10 @@ log = logging.getLogger(__name__)
 def _quote_query(query):
     """Turn a dictionary into a query string in a URL, with keys
     in alphabetical order."""
-    if sys.version_info[0] == 3:
-        return "&".join("%s=%s" % (
-            k, urllib.parse.quote(
-                str(query[k]).encode('utf-8'), safe='~'))
-                for k in sorted(query))
-    else:
-        return "&".join("%s=%s" % (
-            k, urllib.quote(
-                unicode(query[k]).encode('utf-8'), safe='~'))
-                for k in sorted(query))
+    return "&".join("%s=%s" % (
+        k, urllib_quote(
+            unicode(query[k]).encode('utf-8'), safe='~'))
+            for k in sorted(query))
 
 
 class AmazonError(Exception):
