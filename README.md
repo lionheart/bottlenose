@@ -12,6 +12,10 @@ Features
 * Compatible with Python versions 2.4 and up
 * Support for CA, CN, DE, ES, FR, IT, JP, UK, and US Amazon endpoints
 * No requirements, except simplejson for Python pre-2.6
+* Configurable query parsing
+* Configurable throttling for batches of queries
+* Configurable query handling
+* Configurable error handling and retry
 
 Usage
 -----
@@ -50,6 +54,13 @@ for the operation you'd like to call, and you're good to go.
 
 For more information about these calls, please consult the [Product Advertising
 API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
+
+Parsing
+-------
+
+By default, queries
+
+
 
 License
 -------
