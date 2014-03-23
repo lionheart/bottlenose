@@ -4,7 +4,11 @@ Bottlenose
 Description
 -----------
 
-Bottlenose is a thin Python wrapper over the Amazon Product Advertising API. There is practically no overhead. Before you get started, make sure you have both Amazon Product Advertising and AWS accounts (yes, they are separate--confusing, I know).
+Bottlenose is a thin Python wrapper over the Amazon Product Advertising API.
+There is practically no overhead, and no magic (unless you add it yourself).
+
+Before you get started, make sure you have both Amazon Product Advertising and
+AWS accounts (yes, they are separate -- confusing, I know).
 
 Features
 --------
@@ -20,16 +24,20 @@ Features
 Usage
 -----
 
-     >>> import bottlenose
-     >>> amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
-     >>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
-         SearchIndex="Books", IdType="ISBN")
-     <?xml version="1.0" ?><ItemLookupResponse xmlns="http://webservices.amazon...
+```python
+>>> import bottlenose
+>>> amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+>>> response = amazon.ItemLookup(ItemId="0596520999", ResponseGroup="Images",
+    SearchIndex="Books", IdType="ISBN")
+<?xml version="1.0" ?><ItemLookupResponse xmlns="http://webservices.amazon...
+```
 
 Here's another example.
 
-     >>> response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
-     <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
+```python
+>>> response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
+<?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
+```
 
 Bottlenose can also read your credentials from the environment automatically;
 just set `$AWS_ACCESS_KEY_ID`, `$AWS_SECRET_ACCESS_KEY` and
@@ -65,9 +73,11 @@ parsed response in a format of your choice.
 
 For example, to parse responses with BeautifulSoup:
 
-    from bs4 import BeautifulSoup
+```python
+from bs4 import BeautifulSoup
 
-    amazon = bottlenose.Amazon(Parser=BeautifulSoup)
+amazon = bottlenose.Amazon(Parser=BeautifulSoup)
+```
 
 Throttling/Batch Mode
 ---------------------
@@ -80,7 +90,9 @@ API call.
 
 Generally, you want to be just under the query limit, for example:
 
-    amazon = bottlenose.Amazon(MaxQPS=0.9)
+```python
+amazon = bottlenose.Amazon(MaxQPS=0.9)
+```
 
 If some other code is also querying the API with your associate tag (for
 example, a website backend), you'll want to choose an even lower value
@@ -105,14 +117,16 @@ For example:
 
 Example code:
 
-    def write_query_to_db(cache_url, data):
-        ...
+```python
+def write_query_to_db(cache_url, data):
+    ...
 
-    def read_query_from_db(cache_url):
-        ...
+def read_query_from_db(cache_url):
+    ...
 
-    amazon = bottlenose.Amazon(CacheWriter=write_query_to_db,
-                               CacheReader=read_query_from_db)
+amazon = bottlenose.Amazon(CacheWriter=write_query_to_db,
+                           CacheReader=read_query_from_db)
+```
 
 Note that Amazon's [Product Advertising API Agreement](https://affiliate-program.amazon.com/gp/advertising/api/detail/agreement.html)
 only allows you to cache queries for up to 24 hours.
@@ -135,19 +149,21 @@ with these keys:
 If your `ErrorHandler` returns true, the query will be retried. Here's some
 example code that does exponential backoff after throttling:
 
-    import random
-    import time
-    from urllib2 import HTTPError
+```python
+import random
+import time
+from urllib2 import HTTPError
 
-    def error_handler(err):
-        ex = err['exception']
-        if isinstance(ex, HTTPError) and ex.code == 503:
-            time.sleep(random.expovariate(0.1))
-            return True
+def error_handler(err):
+    ex = err['exception']
+    if isinstance(ex, HTTPError) and ex.code == 503:
+        time.sleep(random.expovariate(0.1))
+        return True
 
-    amazon = bottlenose.Amazon(ErrorHandler=error_handler)
+amazon = bottlenose.Amazon(ErrorHandler=error_handler)
+```
 
 License
 -------
 
-See LICENSE for details.
+Apache License, Version 2.0. See LICENSE for details.
