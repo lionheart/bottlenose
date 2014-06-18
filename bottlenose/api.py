@@ -36,6 +36,7 @@ SERVICE_DOMAINS = {
     'DE': ('ecs.amazonaws.de', 'xml-de.amznxslt.com'),
     'ES': ('webservices.amazon.es', 'xml-es.amznxslt.com'),
     'FR': ('ecs.amazonaws.fr', 'xml-fr.amznxslt.com'),
+    'IN': ('webservices.amazon.in', 'xml-in.amznxslt.com'),
     'IT': ('webservices.amazon.it', 'xml-it.amznxslt.com'),
     'JP': ('ecs.amazonaws.jp', 'xml-jp.amznxslt.com'),
     'UK': ('ecs.amazonaws.co.uk', 'xml-uk.amznxslt.com'),
