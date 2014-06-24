@@ -32,39 +32,65 @@ Usage
 amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
 ```
 
-```
-# Search for a Specific Item
+##### Search for a Specific Item
+
+```python
 response = amazon.ItemLookup(ItemId="B007OZNUCE")
+```
 
-# Search for Items by Keywords
+##### Search for Items by Keywords
+
+```python
 response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
+```
 
-# Search for Images for an item
+##### Search for Images for an item
+
+```python
 response = amazon.ItemLookup(ItemId="1449372422", ResponseGroup="Images")
+```
 
-# Search for Similar Items
+##### Search for Similar Items
+
+```python
 response = amazon.SimilarityLookup(ItemId="B007OZNUCE")
 ```
 
 #### 2. Available Shopping Related Methods:
 
+##### Required
+
 ```python
-# Required
 amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+```
 
-# Create a cart
+##### Create a cart
+
+```python
 response = amazon.CartCreate(...)
+```
 
-# Adding to a cart
+##### Adding to a cart
+
+```python
 response = amazon.CartAdd(CartId, ...)
+```
 
-# Get a cart by ID
+##### Get a cart by ID
+
+```python
 response = amazon.CartGet(CartId, ...)
+```
 
-# Modifying a cart
+##### Modifying a cart
+
+```python
 response = amazon.CartModify(ASIN,CartId,...)
+```
 
-# Clearing a cart
+##### Clearing a cart
+
+```python
 response = amazon.CartClear(CartId, ...)
 ```
 
