@@ -26,10 +26,13 @@ Usage
 
 #### 1. Available Search Methods:
 
-```python
-# Required
-amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+##### Required
 
+```python
+amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+```
+
+```
 # Search for a Specific Item
 response = amazon.ItemLookup(ItemId="B007OZNUCE")
 
