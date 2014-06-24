@@ -85,7 +85,7 @@ response = amazon.CartGet(CartId, ...)
 ##### Modifying a cart
 
 ```python
-response = amazon.CartModify(ASIN,CartId,...)
+response = amazon.CartModify(ASIN, CartId,...)
 ```
 
 ##### Clearing a cart
