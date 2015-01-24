@@ -81,7 +81,7 @@ class AmazonError(Exception):
 
 class AmazonCall(object):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
-            AssociateTag=None, Operation=None, Version=None, Region=None,
+            AssociateTag=None, Operation=None, Version="2013-08-01", Region=None,
             Timeout=None, MaxQPS=None, Parser=None,
             CacheReader=None, CacheWriter=None,
             ErrorHandler=None,
