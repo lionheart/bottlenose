@@ -14,7 +14,7 @@ Features
 --------
 
 * Compatible with Python versions 2.4 and up
-* Support for CA, CN, DE, ES, FR, IT, JP, UK, and US Amazon endpoints
+* Support for CA, CN, DE, ES, FR, IN, IT, JP, UK, and US Amazon endpoints
 * No requirements, except simplejson for Python pre-2.6
 * Configurable query parsing
 * Configurable throttling for batches of queries
