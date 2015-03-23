@@ -153,13 +153,20 @@ class AmazonCall(object):
 
         data = "GET\n" + service_domain + "\n/onca/xml\n" + quoted_strings
 
+        # convert unicode to UTF8 bytes for hmac library
+        if type(self.AWSSecretAccessKey) is unicode:
+            self.AWSSecretAccessKey = self.AWSSecretAccessKey.encode('utf-8')
+
+        if type(data) is unicode:
+            data = data.encode('utf-8')
+
+        # calculate sha256 signature
+        digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
+
+        # base64 encode and urlencode
         if sys.version_info[0] == 3:
-            digest = hmac.new(
-                bytes(self.AWSSecretAccessKey, encoding='utf-8'),
-                bytes(data, encoding='utf-8'), sha256).digest()
             signature = urllib.parse.quote(b64encode(digest))
         else:
-            digest = hmac.new(self.AWSSecretAccessKey, data, sha256).digest()
             signature = urllib.quote(b64encode(digest))
 
         return ("http://" + service_domain + "/onca/xml?" +
