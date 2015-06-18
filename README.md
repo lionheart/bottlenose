@@ -126,9 +126,6 @@ for the operation you'd like to call, and you're good to go.
     CartModify
     ItemLookup
     ItemSearch
-    SellerListingLookup
-    SellerListingSearch
-    SellerLookup
     SimilarityLookup
 
 You can refer here for a full listing of API calls to be made from Amazon.
