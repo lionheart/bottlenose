@@ -51,16 +51,18 @@ except ImportError:
     pass
 
 SERVICE_DOMAINS = {
-    'CA': ('ecs.amazonaws.ca', 'xml-ca.amznxslt.com'),
+    'CA': ('webservices.amazon.ca', 'xml-ca.amznxslt.com'),
     'CN': ('webservices.amazon.cn', 'xml-cn.amznxslt.com'),
-    'DE': ('ecs.amazonaws.de', 'xml-de.amznxslt.com'),
+    'DE': ('webservices.amazon.de', 'xml-de.amznxslt.com'),
     'ES': ('webservices.amazon.es', 'xml-es.amznxslt.com'),
-    'FR': ('ecs.amazonaws.fr', 'xml-fr.amznxslt.com'),
+    'FR': ('webservices.amazon.fr', 'xml-fr.amznxslt.com'),
     'IN': ('webservices.amazon.in', 'xml-in.amznxslt.com'),
     'IT': ('webservices.amazon.it', 'xml-it.amznxslt.com'),
-    'JP': ('ecs.amazonaws.jp', 'xml-jp.amznxslt.com'),
-    'UK': ('ecs.amazonaws.co.uk', 'xml-uk.amznxslt.com'),
-    'US': ('ecs.amazonaws.com', 'xml-us.amznxslt.com'),
+    'JP': ('webservices.amazon.co.jp', 'xml-jp.amznxslt.com'),
+    'UK': ('webservices.amazon.co.uk', 'xml-uk.amznxslt.com'),
+    'US': ('webservices.amazon.com', 'xml-us.amznxslt.com'),
+    'BR': ('webservices.amazon.com.br', 'xml-br.amznxslt.com'),
+    'MX': ('webservices.amazon.com.mx', 'xml-mx.amznxslt.com')
 }
 
 log = logging.getLogger(__name__)
