@@ -129,7 +129,7 @@ for the operation you'd like to call, and you're good to go.
     SimilarityLookup
 
 You can refer here for a full listing of API calls to be made from Amazon.
-- [Amazon API Quick Reference Card](http://s3.amazonaws.com/awsdocs/Associates/2011-08-01/prod-adv-api-qrc-2011-08-01.pdf)
+- [Amazon API Quick Reference Card](http://s3.amazonaws.com/awsdocs/Associates/latest/prod-adv-api-qrc.pdf)
 
 -------
 
@@ -186,7 +186,7 @@ returns a (cached) raw response, or `None` if there is nothing cached.
 The cache url is the actual query URL with authentication information removed.
 For example:
 
-    http://ecs.amazonaws.com/onca/xml?Keywords=vacuums&Operation=ItemSearch&Region=US&ResponseGroup=SearchBins&SearchIndex=All&Service=AWSECommerceService&Version=2011-08-01
+    http://webservices.amazon.com/onca/xml?Keywords=vacuums&Operation=ItemSearch&Region=US&ResponseGroup=SearchBins&SearchIndex=All&Service=AWSECommerceService&Version=2013-08-01
 
 Example code:
 

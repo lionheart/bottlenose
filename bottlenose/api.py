@@ -273,7 +273,7 @@ class AmazonCall(object):
 
 class Amazon(AmazonCall):
     def __init__(self, AWSAccessKeyId=None, AWSSecretAccessKey=None,
-            AssociateTag=None, Operation=None, Version="2011-08-01",
+            AssociateTag=None, Operation=None, Version="2013-08-01",
             Region="US", Timeout=None, MaxQPS=None, Parser=None,
             CacheReader=None, CacheWriter=None, ErrorHandler=None):
         """Create an Amazon API object.
