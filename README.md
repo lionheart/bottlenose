@@ -19,6 +19,7 @@ Bottlenose
 
 [![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/restmapper)
 [![License](https://img.shields.io/pypi/l/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/restmapper)
+[![Downloads](http://img.shields.io/pypi/dm/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/restmapper)
 
 Description
 -----------
