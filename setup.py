@@ -55,7 +55,7 @@ setup(
     author_email=metadata['__email__'],
     url='https://github.com/lionheart/bottlenose',
     packages=["bottlenose"],
-    data_files=[("", ["LICENSE"])],
+    data_files=[("", ["LICENSE", "README.md"])],
     license=metadata['__license__'],
     zip_safe=True,
     install_requires=install_requires,
