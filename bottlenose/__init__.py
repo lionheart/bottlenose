@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright 2012 Lionheart Software LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,3 +16,11 @@
 
 from bottlenose.api import *
 
+from .metadata import (
+    __author__,
+    __copyright__,
+    __email__,
+    __license__,
+    __maintainer__,
+    __version__,
+)
