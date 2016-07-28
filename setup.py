@@ -1,34 +1,62 @@
-from setuptools import setup, find_packages
-import sys, os
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-version = '0.6.4'
+# Copyright 2012 Lionheart Software LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import sys
+import os
+
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
+metadata = {}
+execfile("bottlenose/metadata.py", metadata)
 
 install_requires = []
-if sys.hexversion <= 0x20600f0: # Check for Python version bundled with json module
+if sys.version_info < (2, 6):
+    # Python 2.6 was the first version to come bundled with the json module.
     install_requires.append("simplejson>=1.7.1")
 
-setup(name='bottlenose',
-      version=version,
-      description="A Python hook into the Amazon.com Product Advertising API",
-      # http://pypi.python.org/pypi?:action=list_classifiers
-      classifiers=[
-          "Development Status :: 5 - Production/Stable",
-          "Environment :: Console",
-          "Intended Audience :: Developers",
-          "Natural Language :: English",
-          "Operating System :: OS Independent",
-          "Programming Language :: Python",
-          "Topic :: Software Development :: Libraries :: Python Modules",
-          "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries",
-          "Topic :: Utilities",
-          "License :: OSI Approved :: Apache Software License",
-          ],
-      keywords='amazon, product advertising, api',
-      author='Dan Loewenherz',
-      author_email='dan@dlo.me',
-      url='http://github.com/lionheart/bottlenose',
-      packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-      include_package_data=True,
-      zip_safe=True,
-      install_requires=install_requires,
+# http://pypi.python.org/pypi?:action=list_classifiers
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: Apache Software License",
+]
+
+setup(
+    name='bottlenose',
+    version=metadata['__version__'],
+    description="A Python hook into the Amazon.com Product Advertising API",
+    classifiers=classifiers,
+    keywords='amazon, product advertising, api',
+    author=metadata['__author__'],
+    author_email=metadata['__email__'],
+    url='https://github.com/lionheart/bottlenose',
+    packages=["bottlenose"],
+    data_files=[("", ["LICENSE"])],
+    license=metadata['__license__'],
+    zip_safe=True,
+    install_requires=install_requires,
 )
