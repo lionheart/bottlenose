@@ -57,6 +57,5 @@ setup(
     packages=["bottlenose"],
     data_files=[("", ["LICENSE", "README.md"])],
     license=metadata['__license__'],
-    zip_safe=True,
     install_requires=install_requires,
 )
