@@ -24,7 +24,7 @@ except ImportError:
     from distutils.core import setup
 
 metadata = {}
-execfile("bottlenose/metadata.py", metadata)
+exec(compile(open("bottlenose/metadata.py").read(), "bottlenose/metadata.py", 'exec'), metadata)
 
 install_requires = []
 if sys.version_info < (2, 6):
