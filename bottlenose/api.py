@@ -185,7 +185,7 @@ class AmazonCall(object):
         else:
             signature = urllib.quote(b64encode(digest))
 
-        return ("http://" + service_domain + "/onca/xml?" +
+        return ("https://" + service_domain + "/onca/xml?" +
                 quoted_strings + "&Signature=%s" % signature)
 
     def cache_url(self, **kwargs):
@@ -199,7 +199,7 @@ class AmazonCall(object):
 
         service_domain = SERVICE_DOMAINS[self.Region][0]
 
-        return "http://" + service_domain + "/onca/xml?" + _quote_query(query)
+        return "https://" + service_domain + "/onca/xml?" + _quote_query(query)
 
     def _call_api(self, api_url, err_env):
         """urlopen(), plus error handling and possible retries.
