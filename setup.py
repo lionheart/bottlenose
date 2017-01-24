@@ -43,6 +43,7 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries",
     "Topic :: Utilities",
     "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 2.7",
 ]
 
 setup(

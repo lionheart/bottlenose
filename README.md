@@ -17,8 +17,9 @@ limitations under the License.
 Bottlenose
 ==========
 
-[![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/restmapper)
-[![License](https://img.shields.io/pypi/l/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/restmapper)
+[![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
+[![License](https://img.shields.io/pypi/l/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
+[![Versions](https://img.shields.io/pypi/pyversions/bottlenose.svg?style=flat])](https://pypi.python.org/pypi/bottlenose)
 
 Description
 -----------
