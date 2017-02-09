@@ -21,8 +21,9 @@ Bottlenose
 [![License](https://img.shields.io/pypi/l/bottlenose.svg?style=flat)](LICENSE)
 [![Versions](https://img.shields.io/pypi/pyversions/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
 
-Bottlenose is a thin Python wrapper over the Amazon Product Advertising API.
-There is practically no overhead, and no magic (unless you add it yourself).
+Bottlenose is a thin, well-tested, maintained, and powerful Python wrapper over
+the Amazon Product Advertising API.  There is practically no overhead, and no
+magic (unless you add it yourself).
 
 Before you get started, make sure you have both Amazon Product Advertising and
 AWS accounts (yes, they are separate -- confusing, I know).
