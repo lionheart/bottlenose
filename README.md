@@ -171,10 +171,10 @@ import bottlenose
 from bs4 import BeautifulSoup
 
 amazon = bottlenose.Amazon(
-    AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_ASSOCIATE_TAG,
-    Region='UK', Parser=lambda text: BeautifulSoup(text, 'xml')
+    AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG,
+    Parser=lambda text: BeautifulSoup(text, 'xml')
 )
-results = amazon.ItemLookup(ItemId="0198596790",ResponseGroup="SalesRank")
+results = amazon.ItemLookup(ItemId="0198596790", ResponseGroup="SalesRank")
 
 print(results.find('SalesRank').string)
 # 168088
