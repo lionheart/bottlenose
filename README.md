@@ -267,8 +267,8 @@ amazon = bottlenose.Amazon(ErrorHandler=error_handler)
 Communication
 -------------
 
-* If you need help, use Stack Overflow. (Tag 'bottlenose')
-* If you'd like to ask a general question, use Stack Overflow.
+* If you need help, use [Stack Overflow](http://stackoverflow.com). (Tag '[bottlenose](http://stackoverflow.com/questions/tagged/bottlenose)')
+* If you'd like to ask a general question, use [Stack Overflow](http://stackoverflow.com).
 * If you found a bug, open an issue.
 * If you have a feature request, open an issue.
 * If you want to contribute, submit a pull request.
