@@ -167,9 +167,16 @@ parsed response in a format of your choice.
 For example, to parse responses with BeautifulSoup:
 
 ```python
+import bottlenose
 from bs4 import BeautifulSoup
 
-amazon = bottlenose.Amazon(Parser=BeautifulSoup)
+amazon = bottlenose.Amazon(
+    AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_ASSOCIATE_TAG,
+    Region='UK', Parser=lambda text: BeautifulSoup(text, 'xml')
+)
+results = amazon.ItemLookup(ItemId="0198596790",ResponseGroup="SalesRank")
+
+print(results.find('SalesRank').string)
 ```
 
 Throttling/Batch Mode
