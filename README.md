@@ -177,6 +177,7 @@ amazon = bottlenose.Amazon(
 results = amazon.ItemLookup(ItemId="0198596790",ResponseGroup="SalesRank")
 
 print(results.find('SalesRank').string)
+# 168088
 ```
 
 Throttling/Batch Mode
