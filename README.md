@@ -161,7 +161,7 @@ You can refer here for a full listing of API calls to be made from Amazon.
 -------
 
 For more information about these calls, please consult the [Product Advertising
-API Developer Guide](http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/index.html).
+API Developer Guide](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/Welcome.html).
 
 Parsing
 -------
