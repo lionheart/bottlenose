@@ -41,6 +41,13 @@ Features
 * Configurable query caching
 * Configurable error handling and retry
 
+Communication
+-------------
+
+* If you need help or would like to ask a general question, use [Stack Overflow](http://stackoverflow.com). (Tag '[bottlenose](http://stackoverflow.com/questions/tagged/bottlenose)')
+* If you found a bug or have a feature request, open an issue.
+* If you want to contribute, submit a pull request (if it's a big change, please open an issue first to discuss implementation).
+
 Usage
 -----
 
@@ -263,15 +270,6 @@ def error_handler(err):
 
 amazon = bottlenose.Amazon(ErrorHandler=error_handler)
 ```
-
-Communication
--------------
-
-* If you need help, use [Stack Overflow](http://stackoverflow.com). (Tag '[bottlenose](http://stackoverflow.com/questions/tagged/bottlenose)')
-* If you'd like to ask a general question, use [Stack Overflow](http://stackoverflow.com).
-* If you found a bug, open an issue.
-* If you have a feature request, open an issue.
-* If you want to contribute, submit a pull request.
 
 License
 -------
