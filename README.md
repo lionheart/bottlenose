@@ -30,7 +30,7 @@ AWS accounts (yes, they are separate -- confusing, I know).
 
 ## Support Bottlenose!
 
-Bottlenose is free software, so it's free for you to use, but donations are very welcome. If bottlenose has ever helped you out on a project or saved you time, please consider sending a donation. :heart:
+Bottlenose is free for you to use, but donations are very welcome. If bottlenose has ever helped you out on a project or saved you time, please consider sending a donation. :heart:
 
 <a href="https://paypal.me/lionheartsw">Donate with PayPal</a>
 
