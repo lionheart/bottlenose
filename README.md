@@ -273,3 +273,5 @@ License
 -------
 
 Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+<a class="coinbase-button" data-code="ba9bdfde02160bd9f3087a5a8f1cb918" data-button-style="custom_large" href="https://www.coinbase.com/checkouts/ba9bdfde02160bd9f3087a5a8f1cb918">Donate Bitcoins</a><script src="https://www.coinbase.com/assets/button.js" type="text/javascript"></script>
