@@ -34,7 +34,7 @@ Bottlenose is free software, so it's free for you to use, but donations are very
 
 <a href="https://paypal.me/lionheartsw">Donate with PayPal</a>
 
-<a href="https://www.coinbase.com/checkouts/c281bec3675bf2ca362639498cfb3f7c" target="_blank">Donate Bitcoins</a>
+<a href="https://www.coinbase.com/checkouts/c9e864e5719a989e4b6e7ba243b95529" target="_blank">Donate Bitcoins</a>
 
 ## Features
 
