@@ -67,15 +67,15 @@ amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIA
 ##### Endpoint
 
 The default Region is the US (`webservices.amazon.com`). To specify a different endpoint
-simply set the region parameter with the request. For example to specify the French
-endpoint (`webservices.amazon.fr`) set the region parameter to 'FR':
+simply set the Region parameter with the request. For example to specify the French
+endpoint (`webservices.amazon.fr`) set the Region parameter to 'FR':
 
 ```python
-amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG, region='FR')
+amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG, Region='FR')
 ```
-Supported values for the region parameter are CA, CN, DE, ES, FR, IN, IT, JP, UK, and US (default).
+Supported values for the Region parameter are CA, CN, DE, ES, FR, IN, IT, JP, UK, and US (default).
 
-Your Amazon Product Advertising account (AWS_ASSOCIATE_TAG) mut be valid for the given region
+Your Amazon Product Advertising account (AWS_ASSOCIATE_TAG) mut exist for the given endpoint
 or you'll get an HTTP 400 error ('Bad Request').
 
 ##### Search for a Specific Item
