@@ -26,7 +26,7 @@ the Amazon Product Advertising API.  There is practically no overhead, and no
 magic (unless you add it yourself).
 
 Before you get started, make sure you have both Amazon Product Advertising and
-AWS accounts (yes, they are separate -- confusing, I know). AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_ASSOCIATE_TAG are all from your Amazon Associate Account.
+AWS accounts (yes, they are separate -- confusing, I know). `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_ASSOCIATE_TAG` are all from your Amazon Associate Account.
 
 ## Support Bottlenose
 
