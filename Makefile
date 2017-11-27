@@ -1,7 +1,12 @@
-all: test publish
+all: clean test publish
+
+clean:
+	rm -rf dist/
 
 test:
 	python setup.py test
 
-publish:
-	python setup.py sdist upload --sign
+publish: clean
+	python setup.py bdist_wheel --universal
+	python3 setup.py bdist_wheel --universal
+	twine upload dist/*
