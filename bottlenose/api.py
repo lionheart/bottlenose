@@ -105,10 +105,19 @@ class AmazonCall(object):
 
         self.AWSAccessKeyId = (AWSAccessKeyId or
                                os.environ.get('AWS_ACCESS_KEY_ID'))
+        if self.AWSAccessKeyId is None:
+            raise TypeError("AWSAccessKeyId is not defined.")
+
         self.AWSSecretAccessKey = (AWSSecretAccessKey or
                                    os.environ.get('AWS_SECRET_ACCESS_KEY'))
+        if self.AWSSecretAccessKey is None:
+            raise TypeError("AWSSecretAccessKey is not defined.")
+
         self.AssociateTag = (AssociateTag or
                              os.environ.get('AWS_ASSOCIATE_TAG'))
+        if self.AssociateTag is None:
+            raise TypeError("AssociateTag is not defined.")
+
         self.CacheReader = CacheReader
         self.CacheWriter = CacheWriter
         self.ErrorHandler = ErrorHandler
