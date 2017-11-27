@@ -17,6 +17,7 @@ limitations under the License.
 Bottlenose
 ==========
 
+[![Version](https://img.shields.io/travis/lionheart/bottlenose.svg?style=flat)](https://travis-ci.org/lionheart/bottlenose)
 [![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
 [![License](https://img.shields.io/pypi/l/bottlenose.svg?style=flat)](LICENSE)
 [![Versions](https://img.shields.io/pypi/pyversions/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
