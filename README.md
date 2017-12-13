@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-Bottlenose
-==========
+# Bottlenose
 
 [![Version](https://img.shields.io/travis/lionheart/bottlenose.svg?style=flat)](https://travis-ci.org/lionheart/bottlenose)
 [![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
@@ -35,27 +34,25 @@ Bottlenose is free for you to use, but donations are very welcome. If bottlenose
 
 <a href="https://paypal.me/lionheartsw">Donate with PayPal</a>
 
-<a href="https://www.coinbase.com/checkouts/c9e864e5719a989e4b6e7ba243b95529" target="_blank">Donate Bitcoins</a>
+<a href="https://www.coinbase.com/checkouts/c9e864e5719a989e4b6e7ba243b95529" target="_blank">Donate Bitcoin</a>
 
 ## Features
 
 * Compatible with Python versions 2.4 and up
-* Support for CA, CN, DE, ES, FR, IN, IT, JP, UK, and US Amazon endpoints
-* No requirements, except simplejson for Python pre-2.6
+* Support for BR, CA, CN, DE, ES, FR, IN, IT, JP, MX, UK, and US Amazon Product Advertising API endpoints
+* No requirements, except simplejson for Python versions before 2.6
 * Configurable query parsing
 * Configurable throttling for batches of queries
 * Configurable query caching
-* Configurable error handling and retry
+* Configurable error handling and retries
 
-Communication
--------------
+## Communication and Support
 
 * If you need help or would like to ask a general question, use [Stack Overflow](http://stackoverflow.com/questions/tagged/bottlenose). Apply the 'bottlenose' tag to your question to get help faster.
 * If you found a bug or have a feature request, open an issue.
 * If you want to contribute, submit a pull request. If it's a big change, please open an issue first to discuss implementation.
 
-Usage
------
+## Usage
 
 #### 1. Available Search Methods:
 
@@ -142,6 +139,7 @@ response = amazon.CartClear(CartId, ...)
 ```
 
 #### 3. Sample Code
+
 ```python
 import bottlenose
 amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
@@ -152,6 +150,7 @@ print(response)
 ```
 
 Here is another example.
+
 ```python
 response = amazon.ItemSearch(Keywords="Kindle 3G", SearchIndex="All")
 # <?xml version="1.0" ?><ItemSearchResponse xmlns="http://webservices.amazon...
@@ -183,8 +182,7 @@ You can refer here for a full listing of API calls to be made from Amazon.
 For more information about these calls, please consult the [Product Advertising
 API Developer Guide](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/Welcome.html).
 
-Parsing
--------
+## Parsing
 
 By default, API calls return the response as a raw bytestring. You can change
 this with the `Parser` constructor argument. The parser is a callable that
@@ -207,8 +205,7 @@ print(results.find('SalesRank').string)
 # 168088
 ```
 
-Throttling/Batch Mode
----------------------
+## Throttling/Batch Mode
 
 Amazon strictly limits the query rate on its API (by default, one query
 per second per associate tag). If you have a batch of non-urgent queries, you
@@ -226,8 +223,7 @@ If some other code is also querying the API with your associate tag (for
 example, a website backend), you'll want to choose an even lower value
 for MaxQPS.
 
-Caching
--------
+## Caching
 
 You can often get a major speedup by caching API queries. Use the `CacheWriter`
 and `CacheReader` constructor arguments.
@@ -259,8 +255,7 @@ amazon = bottlenose.Amazon(CacheWriter=write_query_to_db,
 Note that Amazon's [Product Advertising API Agreement](https://affiliate-program.amazon.com/gp/advertising/api/detail/agreement.html)
 only allows you to cache queries for up to 24 hours.
 
-Error Handling
---------------
+## Error Handling
 
 Sometimes the Amazon API returns errors; for example, if you have gone over
 your query limit, you'll get a 503. The `ErrorHandler` constructor argument
@@ -291,7 +286,6 @@ def error_handler(err):
 amazon = bottlenose.Amazon(ErrorHandler=error_handler)
 ```
 
-License
--------
+## License
 
 Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
