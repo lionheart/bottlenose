@@ -21,48 +21,50 @@ limitations under the License.
 [![License](https://img.shields.io/pypi/l/bottlenose.svg?style=flat)](LICENSE)
 [![Versions](https://img.shields.io/pypi/pyversions/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
 
-Bottlenose is a thin, well-tested, maintained, and powerful Python wrapper over
-the Amazon Product Advertising API.  There is practically no overhead, and no
-magic (unless you add it yourself).
+Bottlenose is a thin, well-tested, maintained, and powerful Python wrapper over the Amazon Product Advertising API.  There is practically no overhead, and no magic (unless you add it yourself).
 
-Before you get started, make sure you have both Amazon Product Advertising and
-AWS accounts (yes, they are separate -- confusing, I know). `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_ASSOCIATE_TAG` are all from your Amazon Associate Account.
-
-## Support Bottlenose
-
-Bottlenose is free for you to use, but donations are very welcome. If bottlenose has ever helped you out on a project or saved you time, please consider sending a donation. :heart:
-
-<a href="https://paypal.me/lionheartsw">Donate with PayPal</a>
-
-<a href="https://www.coinbase.com/checkouts/c9e864e5719a989e4b6e7ba243b95529" target="_blank">Donate Bitcoin</a>
+Before you get started, make sure you have both Amazon Product Advertising and AWS accounts. `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_ASSOCIATE_TAG` are all from your Amazon Associate Account.
 
 ## Features
 
-* Compatible with Python versions 2.4 and up
-* Support for BR, CA, CN, DE, ES, FR, IN, IT, JP, MX, UK, and US Amazon Product Advertising API endpoints
-* No requirements, except simplejson for Python versions before 2.6
-* Configurable query parsing
-* Configurable throttling for batches of queries
-* Configurable query caching
-* Configurable error handling and retries
+* [x] Compatible with Python versions 2.4 and up
+* [x] Support for BR, CA, CN, DE, ES, FR, IN, IT, JP, MX, UK, and US Amazon Product Advertising API endpoints
+* [x] No requirements, except simplejson for Python versions before 2.6
+* [x] Configurable query parsing
+* [x] Configurable throttling for batches of queries
+* [x] Configurable query caching
+* [x] Configurable error handling and retries
 
-## Communication and Support
+## Usage
+
+#### [pip](https://pip.pypa.io/en/stable/installing/)
+
+    pip install bottlenose
+
+or
+
+    python3 -m pip install bottlenose
+
+Then, using your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_ASSOCIATE_TAG`:
+
+```python
+amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+response = amazon.ItemLookup(ItemId="B007OZNUCE")
+```
+
+You can then parse the `response` output to view item information.
+
+## Troubleshooting
 
 * If you need help or would like to ask a general question, use [Stack Overflow](http://stackoverflow.com/questions/tagged/bottlenose). Apply the 'bottlenose' tag to your question to get help faster.
 * If you found a bug or have a feature request, open an issue.
 * If you want to contribute, submit a pull request. If it's a big change, please open an issue first to discuss implementation.
 
-## Usage
+## Advanced Usage
 
-#### 1. Available Search Methods:
+#### 1. Available Search Methods
 
-##### Required
-
-```python
-amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
-```
-
-##### Endpoint
+##### Region Endpoint
 
 The default Region is the US (`webservices.amazon.com`). To specify a different endpoint
 simply set the Region parameter with the request. For example to specify the French
@@ -100,7 +102,7 @@ response = amazon.ItemLookup(ItemId="1449372422", ResponseGroup="Images")
 response = amazon.SimilarityLookup(ItemId="B007OZNUCE")
 ```
 
-#### 2. Available Shopping Related Methods:
+#### 2. Available Shopping Related Methods
 
 ##### Required
 
