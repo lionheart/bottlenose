@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-![](meta/logo.png)
+![](meta/repo-banner.png)
 
 [![Version](https://img.shields.io/travis/lionheart/bottlenose.svg?style=flat)](https://travis-ci.org/lionheart/bottlenose)
 [![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
