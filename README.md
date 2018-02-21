@@ -37,7 +37,7 @@ Before you get started, make sure you have both Amazon Product Advertising and A
 
 ## Usage
 
-#### [pip](https://pip.pypa.io/en/stable/installing/)
+### [pip](https://pip.pypa.io/en/stable/installing/)
 
     pip install bottlenose
 
@@ -48,6 +48,7 @@ or
 Then, using your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_ASSOCIATE_TAG`:
 
 ```python
+import bottlenose
 amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
 response = amazon.ItemLookup(ItemId="B007OZNUCE")
 ```
