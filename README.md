@@ -1,5 +1,5 @@
 <!--
-Copyright 2012-2017 Lionheart Software LLC
+Copyright 2012-2018 Lionheart Software LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-![](meta/repo-banner-2.png)
+![](meta/repo-banner.png)
+[![](meta/repo-banner-bottom.png)][lionheart-url]
 
 [![Version](https://img.shields.io/travis/lionheart/bottlenose.svg?style=flat)](https://travis-ci.org/lionheart/bottlenose)
 [![Version](https://img.shields.io/pypi/v/bottlenose.svg?style=flat)](https://pypi.python.org/pypi/bottlenose)
@@ -292,3 +293,6 @@ amazon = bottlenose.Amazon(ErrorHandler=error_handler)
 ## License
 
 Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+[lionheart-url]: https://lionheartsw.com/
+
