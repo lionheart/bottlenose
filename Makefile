@@ -24,6 +24,9 @@ clean:
 test:
 	python setup.py test
 
+update_readme:
+	pandoc --from=markdown --to=rst --output=README.rst README.md
+
 update_version:
 	sed -i "" "s/\(__version__[ ]*=\).*/\1 \"$(VERSION)\"/g" $(METADATA_FILE)
 	git add .
@@ -36,7 +39,7 @@ update_version:
 	git push origin master
 	git push --tags
 
-publish: clean update_version
+publish: clean update_readme update_version
 	python setup.py bdist_wheel --universal
 	python3 setup.py bdist_wheel --universal
 	gpg --detach-sign -a dist/*.whl
