@@ -23,6 +23,7 @@ clean:
 
 test:
 	python setup.py test
+	python3 setup.py test
 
 update_readme:
 	pandoc --from=markdown --to=rst --output=README.rst README.md
