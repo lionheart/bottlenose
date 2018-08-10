@@ -65,6 +65,7 @@ except ImportError:
     pass
 
 SERVICE_DOMAINS = {
+    'AU': ('webservices.amazon.com.au', 'xml-au.amznxslt.com'),
     'CA': ('webservices.amazon.ca',     'xml-ca.amznxslt.com'),
     'CN': ('webservices.amazon.cn',     'xml-cn.amznxslt.com'),
     'DE': ('webservices.amazon.de',     'xml-de.amznxslt.com'),
