@@ -29,7 +29,7 @@ Before you get started, make sure you have both Amazon Product Advertising and A
 ## Features
 
 * [x] Compatible with Python versions 2.4 and up
-* [x] Support for BR, CA, CN, DE, ES, FR, IN, IT, JP, MX, UK, and US Amazon Product Advertising API endpoints
+* [x] Support for AU, BR, CA, CN, DE, ES, FR, IN, IT, JP, MX, UK, and US Amazon Product Advertising API endpoints
 * [x] No requirements, except simplejson for Python versions before 2.6
 * [x] Configurable query parsing
 * [x] Configurable throttling for batches of queries
